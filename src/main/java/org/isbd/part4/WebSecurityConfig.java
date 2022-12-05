@@ -1,4 +1,4 @@
-package org.artyemlavrov.lab4;
+package org.isbd.part4;
 
 
 import org.springframework.context.annotation.Configuration;
