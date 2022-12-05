@@ -1,4 +1,4 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import lombok.Data;
 
@@ -12,6 +12,6 @@ public class Npc {
     @Id
     private int id;
     @OneToOne
-    private Entity entity;
+    private org.isbd.part4.entity.Entity entity;
     private int damage;
 }

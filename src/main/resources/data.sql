@@ -1,67 +1,60 @@
 -- Заполнение таблиц ключевыми данными
-INSERT INTO race (id, damage, health, name, side_id) VALUES (DEFAULT, 10, 100, 'Человек', 2),
-                                                            (DEFAULT, 20, 80, 'Дворф', 2),
-                                                            (DEFAULT, 15, 95, 'Орк', 1),
-                                                            (DEFAULT, 25, 70, 'Нежить', 1);
+INSERT INTO side (name) VALUES ('Альянс'),
+                               ('Орда');
 
-INSERT INTO account (id, email, password) VALUES (DEFAULT, 'anton@gmail.com', '123321'),
-                                                 (DEFAULT, 'artem@gmail.com', '321123');
+INSERT INTO race (damage, health, name, side_id) VALUES (10, 100, 'Человек', 2),
+                                                            (20, 80, 'Дворф', 2),
+                                                            (15, 95, 'Орк', 1),
+                                                            (25, 70, 'Нежить', 1);
 
-INSERT INTO ability (id, damage, health, name) VALUES (DEFAULT, 20, 0, 'Огненый шар'),
-                                                      (DEFAULT, 10, 0, 'Удар ногой'),
-                                                      (DEFAULT, 15, 0, 'выстрел'),
-                                                      (DEFAULT, 25, 0, 'бросок оружия'),
-                                                      (DEFAULT, 30, 0, 'ледяной шар'),
-                                                      (DEFAULT, 0, 5, 'Легкое исцеление'),
-                                                      (DEFAULT, 0, 10, 'Исцеление');
+INSERT INTO account (email, password) VALUES ('anton@gmail.com', '123321'),
+                                                 ('artem@gmail.com', '321123');
+
+INSERT INTO ability (damage, health, name) VALUES (20, 0, 'Огненый шар'),
+                                                      (10, 0, 'Удар ногой'),
+                                                      (15, 0, 'выстрел'),
+                                                      (25, 0, 'бросок оружия'),
+                                                      (30, 0, 'ледяной шар'),
+                                                      (0, 5, 'Легкое исцеление'),
+                                                      (0, 10, 'Исцеление');
 
 
-INSERT INTO person_class (id, damage, health, name) VALUES (DEFAULT, 22, 14, 'Маг'),
-                                                           (DEFAULT, 13, 12, 'Воин'),
-                                                           (DEFAULT, 43, 33, 'Жрец'),
-                                                           (DEFAULT, 12, 21, 'Охотник'),
-                                                           (DEFAULT, 31, 32, 'Друид');
+INSERT INTO person_class (damage, health, name) VALUES (22, 14, 'Маг'),
+                                                           (13, 12, 'Воин'),
+                                                           (43, 33, 'Жрец'),
+                                                           (12, 21, 'Охотник'),
+                                                           (31, 32, 'Друид');
 
-INSERT INTO item (id, damage, health, type, name) VALUES (DEFAULT, 213, 21, 'wearable', 'Молоток'),
-                                                         (DEFAULT, 123, 23, 'wearable', 'кинжал'),
-                                                         (DEFAULT, 3, 23, 'wearable', 'пистолет'),
-                                                         (DEFAULT, 1, 43, 'wearable', 'лук'),
-                                                         (DEFAULT, 32, 12, 'usable', 'Исцеляющее зелье '),
-                                                         (DEFAULT, 34, 32, 'wearable', 'Штаны классические'),
-                                                         (DEFAULT, 121, 43, 'wearable', 'Штаны модные'),
-                                                         (DEFAULT, 23, 12, 'usable', 'Сок');
+INSERT INTO item (damage, health, type, name) VALUES (213, 21, 'wearable', 'Молоток'),
+                                                         (123, 23, 'wearable', 'кинжал'),
+                                                         (3, 23, 'wearable', 'пистолет'),
+                                                         (1, 43, 'wearable', 'Kук'),
+                                                         (32, 12, 'usable', 'Исцеляющее зелье '),
+                                                         (34, 32, 'wearable', 'Штаны классические'),
+                                                         (121, 43, 'wearable', 'Штаны модные'),
+                                                         (23, 12, 'usable', 'Сок');
 
-INSERT INTO location (id, name) VALUES (DEFAULT, 'Пустыня'),
-                                       (DEFAULT, 'Лес'),
-                                       (DEFAULT, 'Болота'),
-                                       (DEFAULT, 'Город'),
-                                       (DEFAULT, 'Степь'),
-                                       (DEFAULT, 'Ледниковая зона');
+INSERT INTO location (name) VALUES ('Пустыня'),
+                                       ('Лес'),
+                                       ('Болота'),
+                                       ('Город'),
+                                       ('Степь'),
+                                       ('Ледниковая зона');
 
-INSERT INTO npc_info (id, damage , name, health, location_id) VALUES (DEFAULT, 23, 'Конь', 12, 1),
-                                                                     (DEFAULT, 12, 'Зомби', 2, 2),
-                                                                     (DEFAULT, 34, 'Заяц', 23, 3),
-                                                                     (DEFAULT, 21, 'Свинья', 1, 2),
-                                                                     (DEFAULT, 53, 'Богомол', 21, 2),
-                                                                     (DEFAULT, 12, 'Олень', 21, 1);
+INSERT INTO npc_info (damage, name, health, location_id) VALUES (23, 'Конь', 12, 1),
+                                                                     (12, 'Зомби', 2, 2),
+                                                                     (34, 'Заяц', 23, 3),
+                                                                     (21, 'Свинья', 1, 2),
+                                                                     (53, 'Богомол', 21, 2),
+                                                                     (12, 'Олень', 21, 1);
 
 
 
 INSERT INTO location_near_location (location_id, near_location_id) VALUES (1, 2),
-                                                                          (1, 3),
-                                                                          (2, 1),
-                                                                          (3, 1),
-                                                                          (2, 4);
-
-INSERT INTO person_class_ability (person_class_id, ability_id) VALUES (1, 1),
-                                                                      (1, 2),
-                                                                      (1, 3),
-                                                                      (2, 2),
-                                                                      (2, 3),
-                                                                      (2, 4),
-                                                                      (2, 5),
-                                                                      (3, 1),
-                                                                      (3, 3);
+                                                              (1, 3),
+                                                              (2, 1),
+                                                              (3, 1),
+                                                              (2, 4);
 
 INSERT INTO person_class_ability (person_class_id, ability_id) VALUES (4, 1),
                                                                       (4, 3),

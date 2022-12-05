@@ -1,8 +1,8 @@
-package org.artyemlavrov.lab4.controller;
+package org.isbd.part4.controller;
 
-import org.artyemlavrov.lab4.entity.Account;
-import org.artyemlavrov.lab4.service.DatabaseAccountDetailsService;
-import org.artyemlavrov.lab4.service.UserExistsException;
+import org.isbd.part4.entity.Account;
+import org.isbd.part4.service.DatabaseUserDetailsService;
+import org.isbd.part4.service.UserExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class LoginPageController {
 
     @Autowired
-    private DatabaseAccountDetailsService databaseAccountDetailsService;
+    private DatabaseUserDetailsService databaseUserDetailsService;
 
     @PostMapping("/register")
     public String register(Account account, HttpServletRequest request, RedirectAttributes attributes) {
@@ -36,7 +36,7 @@ public class LoginPageController {
             return redirectLogin;
         }
         try {
-            databaseAccountDetailsService.registerUser(account);
+            databaseUserDetailsService.registerUser(account);
             request.login(account.getUsername(), account.getPassword());
         } catch (UserExistsException e) {
             attributes.addAttribute("register_error", "Пользователь с данным именем уже существует");

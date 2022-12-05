@@ -1,22 +1,20 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.Set;
+import javax.persistence.ManyToOne;
 
 @Data
 @javax.persistence.Entity
-public class CharClass {
-    @ManyToMany
-    private Set<Ability> abilities;
+public class Race {
     @GeneratedValue
     @Id
     private int id;
+    @ManyToOne
+    private Side side;
     private String name;
-    private int damage;
     private int health;
-
+    private int damage;
 }

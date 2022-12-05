@@ -1,4 +1,4 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import lombok.Data;
 
@@ -9,11 +9,14 @@ import java.util.Set;
 
 @Data
 @javax.persistence.Entity
-public class Location {
+public class PersonClass {
+    @ManyToMany
+    private Set<Ability> abilities;
     @GeneratedValue
     @Id
     private int id;
-    @ManyToMany
-    private Set<Location> nearLocations;
     private String name;
+    private int damage;
+    private int health;
+
 }

@@ -1,4 +1,4 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

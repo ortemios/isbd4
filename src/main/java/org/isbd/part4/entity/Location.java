@@ -1,20 +1,19 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
 @Data
 @javax.persistence.Entity
-public class Race {
+public class Location {
     @GeneratedValue
     @Id
     private int id;
-    @ManyToOne
-    private Side side;
+    @ManyToMany
+    private Set<Location> nearLocations;
     private String name;
-    private int health;
-    private int damage;
 }

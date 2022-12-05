@@ -1,4 +1,4 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @javax.persistence.Entity
-public class Character {
+public class Person {
     @GeneratedValue
     @Id
     private int id;
@@ -20,11 +20,10 @@ public class Character {
     @ManyToOne
     private Account account;
     @ManyToOne
-    private CharClass charClass;
+    private PersonClass personClass;
     @ManyToMany
     private List<Item> items;
-//    @OneToOne
-//    private Entity entity
+
     private int level;
     private int experience;
 }

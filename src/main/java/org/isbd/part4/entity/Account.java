@@ -1,4 +1,4 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,23 +13,19 @@ import java.util.Collections;
 
 @Data
 @javax.persistence.Entity
-@Table(name="Account")
 public class Account implements UserDetails {
 
     @GeneratedValue
     @Id
     private int id;
 
-    @Column(name = "user",nullable = false, unique = true)
-    @NotNull(message = "Имя пользователя не может быть пустым")
-    private String user;
+    @Column(nullable = false, unique = true)
+    @NotNull(message = "Email пользователя не может быть пустым")
+    private String email;
 
     @Size(min = 8, message = "Пароль слишком короткий")
     @NotNull(message = "Пароль не может быть пустым")
     private String password;
-
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -38,11 +34,11 @@ public class Account implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user;
+        return email;
     }
 
     public void setUsername(String username) {
-       this.user = username;
+        this.email = username;
     }
 
     @Override
@@ -64,6 +60,4 @@ public class Account implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }

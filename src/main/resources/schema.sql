@@ -154,7 +154,7 @@ create index entity_location_id_idx ON entity USING HASH(location_id);
 --     2) поле health восстанавливается, если "entity" является "person",
 --     также происходит перемещение в стартовую локацию
 drop trigger if exists check_entity_health_trigger on entity;
-create or replace function check_entity_health() returns trigger as $$
+create or replace function check_entity_health() returns trigger as '
 declare
 r_npc_id int;
     r_person person%ROWTYPE;
@@ -173,7 +173,7 @@ return new;
 end if;
 end if;
 end;
-$$ language plpgsql;
+' language plpgsql;
 create trigger check_entity_health_trigger
     before update on entity
     for each row when (new.health <= 0)
@@ -181,12 +181,12 @@ create trigger check_entity_health_trigger
 
 -- При удалении person, удаляются связанные с ним entity
 drop trigger if exists delete_person_entity_trigger on person;
-create or replace function delete_person_entity() returns trigger as $$
+create or replace function delete_person_entity() returns trigger as '
 begin
 delete from entity where entity.id = old.entity_id;
 return null;
 end;
-$$ language plpgsql;
+' language plpgsql;
 create trigger delete_person_entity_trigger
     after delete on person
     for each row
@@ -195,12 +195,12 @@ create trigger delete_person_entity_trigger
 
 -- При удалении npc, удаляются связанные с ним entity
 drop trigger if exists delete_npc_entity_trigger on npc;
-create or replace function delete_npc_entity() returns trigger as $$
+create or replace function delete_npc_entity() returns trigger as '
 begin
 delete from entity where entity.id = old.entity_id;
 return null;
 end;
-$$ language plpgsql;
+' language plpgsql;
 create trigger delete_npc_entity_trigger
     after delete on npc
     for each row
@@ -208,7 +208,7 @@ create trigger delete_npc_entity_trigger
 
 -- При накоплении опыта - уровень повышается, опыт обнуляется
 drop trigger if exists check_person_experience_trigger on person;
-create or replace function check_person_experience() returns trigger as $$
+create or replace function check_person_experience() returns trigger as '
 begin
     if new.experience >= 10 then
         new.level = new.level + new.experience / 10;
@@ -216,7 +216,7 @@ begin
 end if;
 return new;
 end;
-$$ language plpgsql;
+' language plpgsql;
 create trigger check_person_experience_trigger
     before update on person
     for each row when (new.experience >= 10)
@@ -228,7 +228,7 @@ create trigger check_person_experience_trigger
 
 -- create_person - создает "entity" в стартовой локации и базовым запасом здоровья,
 -- а также связанный с ней "person" с именем, расой и классом в указанном "account"
-create or replace procedure create_person(p_account_id int, p_name varchar(255), p_race_id int, p_class_id int) as $$
+create or replace procedure create_person(p_account_id int, p_name varchar(255), p_race_id int, p_class_id int) as '
 begin
 with tmp as (
 insert into entity (health, location_id)
@@ -248,10 +248,10 @@ values (p_account_id,
     (select id from tmp)
     );
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Перерождает "npc" согласно данным из "npc_info"
-create or replace procedure spawn_npc() as $$
+create or replace procedure spawn_npc() as '
 declare
 r_npc_info npc_info%ROWTYPE;
 begin
@@ -270,10 +270,10 @@ for r_npc_info in select * from npc_info loop
                       );
 end loop;
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Восстанваливет здоровье "person", запас которого меньше базового
-create or replace procedure heal() as $$
+create or replace procedure heal() as '
 begin
 with tmp as (
     select entity.id as entity_id from entity
@@ -284,10 +284,10 @@ with tmp as (
 )
 update entity set health = health + 1 where entity.id = any(select entity_id from tmp);
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Перемещает person в соседнюю локацию с указанным location_id
-create or replace procedure move_person(person_id int, next_location_id int) as $$
+create or replace procedure move_person(person_id int, next_location_id int) as '
 declare
 person_entity_id int;
     curr_location_id int;
@@ -301,10 +301,10 @@ if exists(select * from location_near_location
 update entity set location_id = next_location_id where entity.id = person_entity_id;
 end if;
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Возвращает true, если обе "entity" являются "person", принадлежащими одной стороне
-create or replace function are_friends(a_entity_id int, b_entity_id int) returns boolean as $$
+create or replace function are_friends(a_entity_id int, b_entity_id int) returns boolean as '
     declare
 a_side int;
         b_side int;
@@ -317,12 +317,12 @@ begin
             join person on race.id = person.race_id and person.entity_id = b_entity_id), -2);
 return a_side = b_side;
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Вычисляет запас здоровья entity с a_entity_id во время взаимодействия с b_entity_id
 -- В случае взаимодействия с враждебеным существом, исцеляющий эффект предметов и способностей применяется к a_entity
 -- В случае взаимодействия с дружественным существом, исцеляющий эффект на a_entity не действует
-create or replace function entity_health(a_entity_id int, b_entity_id int, person_item_ids int[]) returns real as $$
+create or replace function entity_health(a_entity_id int, b_entity_id int, person_item_ids int[]) returns real as '
     declare
 r_health int := 0;
         r_person person%ROWTYPE;
@@ -347,7 +347,7 @@ r_health := r_health +
                     coalesce((select sum(health) from item join person_item
                         on person_item.item_id = item.id
                                and person_item.person_id = r_person.id
-                               and item.type = 'wearable'
+                               and item.type = ''wearable''
                         group by person_item.person_id
                     ), 0);
                 -- Items (usable)
@@ -355,7 +355,7 @@ r_health := r_health +
                     coalesce((select sum(health) from item join person_item
                         on person_item.item_id = item.id
                                and person_item.person_id = r_person.id
-                               and item.type = 'usable'
+                               and item.type = ''usable''
                                and person_item.id = any (person_item_ids)
                         group by person_item.person_id
                     ), 0);
@@ -363,12 +363,12 @@ end if;
 end if;
 return r_health;
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Вычисляет запас здоровья entity с a_entity_id во время взаимодействия с b_entity_id
 -- В случае взаимодействия с враждебеным существом, урон предметов и способностей применяется к b_entity
 -- В случае взаимодействия с дружественным существом, исцеляющий эффект действует на b_entity
-create or replace function entity_damage(a_entity_id int, b_entity_id int, person_item_ids int[]) returns int as $$
+create or replace function entity_damage(a_entity_id int, b_entity_id int, person_item_ids int[]) returns int as '
 declare
 r_damage int := 0;
     r_npc npc%ROWTYPE;
@@ -391,7 +391,7 @@ r_damage := r_damage -
                        coalesce((select sum(health) from item join person_item
                                                            on person_item.item_id = item.id
                                                                and person_item.person_id = r_person.id
-                                                               and item.type = 'usable'
+                                                               and item.type = ''usable''
                                                                and person_item.id = any (person_item_ids)
                          group by person_item.person_id
                        ), 0);
@@ -405,7 +405,7 @@ else
             -- Items (wearable)
             r_damage := r_damage +
                        coalesce((select sum(damage) from item join person_item
-                                                           on person_item.item_id = item.id and person_item.person_id = r_person.id and item.type = 'wearable'
+                                                           on person_item.item_id = item.id and person_item.person_id = r_person.id and item.type = ''wearable''
                          group by person_item.person_id
                        ), 0);
             -- Items (usable)
@@ -413,7 +413,7 @@ else
                        coalesce((select sum(damage) from item join person_item
                                                            on person_item.item_id = item.id
                                                                and person_item.person_id = r_person.id
-                                                               and item.type = 'usable'
+                                                               and item.type = ''usable''
                                                                and person_item.id = any (person_item_ids)
                          group by person_item.person_id
                        ), 0);
@@ -421,14 +421,14 @@ end if;
 end if;
 return r_damage;
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
 -- Взаимодействие двух entity
 -- При взаимодействии враждебных существ, их здоровье уменьшается, согласно наносимому друг другу урону
 -- Дружественные существа лечат друг друга
 -- При получении отрицательных значений - см. триггер check_entity_health
 -- Удаляются использованные предметы
-create or replace procedure interact(attacker_id int, victim_id int, person_item_ids int[])  as $$
+create or replace procedure interact(attacker_id int, victim_id int, person_item_ids int[])  as '
 declare
 h1 int;
     h2 int;
@@ -471,10 +471,10 @@ update entity set health = real_h2 where entity.id = victim_id;
 delete from person_item where person_item.id = any(
     select person_item.id from person_item
                                    join person on person.id = person_item.person_id and person.entity_id = attacker_id
-                                   join item on person_item.item_id = item.id and item.type = 'usable'
+                                   join item on person_item.item_id = item.id and item.type = ''usable''
     where person_item.id = any(person_item_ids)
 );
 end if;
 end;
-$$ language  plpgsql;
+' language  plpgsql;
 
