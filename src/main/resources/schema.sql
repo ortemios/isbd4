@@ -141,7 +141,7 @@ create index person_account_id_idx ON person USING HASH (account_id);
 create index person_entity_id_idx ON person USING HASH (entity_id);
 -- помогает найти npc по id его существа(Был выбран HASH по причине того, что он быстрее чем B-tree и нам необходимо сравнение только на совпадение )
 create index npc_entity_id_idx ON person USING HASH (entity_id);
--- Помогает найти пароль по email(Был выбран HASH по причине того, что он быстрее чем B-tree и нам необходимо сравнение только на совпадение )
+-- Помогает найти пароль по user(Был выбран HASH по причине того, что он быстрее чем B-tree и нам необходимо сравнение только на совпадение )
 create index account_email_id_idx ON account USING HASH(email);
 -- помогает найти все предметы указанного пользователя(Был выбран HASH по причине того, что он быстрее чем B-tree и нам необходимо сравнение только на совпадение )
 create index person_item_id_idx ON person_item USING HASH(person_id);
