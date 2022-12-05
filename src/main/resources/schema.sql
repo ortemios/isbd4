@@ -15,7 +15,7 @@ drop table if exists race;
 drop table if exists side;
 drop table if exists account;
 
--- Создание таблиц
+-- Создание таблицй
 create table ability
 (
     id     serial primary key,
