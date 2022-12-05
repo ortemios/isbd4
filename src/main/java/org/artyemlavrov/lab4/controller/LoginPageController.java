@@ -1,7 +1,7 @@
 package org.artyemlavrov.lab4.controller;
 
-import org.artyemlavrov.lab4.entity.User;
-import org.artyemlavrov.lab4.service.DatabaseUserDetailsService;
+import org.artyemlavrov.lab4.entity.Account;
+import org.artyemlavrov.lab4.service.DatabaseAccountDetailsService;
 import org.artyemlavrov.lab4.service.UserExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,14 +20,14 @@ import java.util.stream.Collectors;
 public class LoginPageController {
 
     @Autowired
-    private DatabaseUserDetailsService databaseUserDetailsService;
+    private DatabaseAccountDetailsService databaseAccountDetailsService;
 
     @PostMapping("/register")
-    public String register(User user, HttpServletRequest request, RedirectAttributes attributes) {
+    public String register(Account account, HttpServletRequest request, RedirectAttributes attributes) {
         final String redirectHome = "redirect:/home";
         final String redirectLogin = "redirect:/login";
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        Set<ConstraintViolation<Account>> violations = validator.validate(account);
         if (!violations.isEmpty()) {
             String errorMessage = violations.stream()
                     .map(ConstraintViolation::getMessage)
@@ -36,8 +36,8 @@ public class LoginPageController {
             return redirectLogin;
         }
         try {
-            databaseUserDetailsService.registerUser(user);
-            request.login(user.getUsername(), user.getPassword());
+            databaseAccountDetailsService.registerUser(account);
+            request.login(account.getUsername(), account.getPassword());
         } catch (UserExistsException e) {
             attributes.addAttribute("register_error", "Пользователь с данным именем уже существует");
             return redirectLogin;
