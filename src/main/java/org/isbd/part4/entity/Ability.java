@@ -14,6 +14,6 @@ public class Ability {
     @Id
     private int id;
     private String name;
-    private int damage;
+    private Integer damage;
     private int health;
 }

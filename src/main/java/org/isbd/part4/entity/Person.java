@@ -15,15 +15,12 @@ public class Person {
     @GeneratedValue
     @Id
     private int id;
-    @ManyToOne
-    private Race race;
-    @ManyToOne
-    private Account account;
-    @ManyToOne
-    private PersonClass personClass;
-    @ManyToMany
-    private List<Item> items;
 
-    private int level;
-    private int experience;
+    private String name;
+    private Integer raceId;
+    private Integer personClassId;
+    private Integer entityId;
+    private Integer accountId;
+    private Integer level;
+    private Integer experience;
 }

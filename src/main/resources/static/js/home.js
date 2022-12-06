@@ -1,62 +1,27 @@
 let app = new Vue({
     el: '#app',
     methods: {
-        submit() {
-            this.addEntry([this.x, this.y, this.r, false])
-        },
-        shoot(x, y, r) {
-            this.addEntry([x, y, r, false])
-        },
-        addEntry(entry) {
-            this.history = [entry].concat(this.history)
-        },
-        loadHistory() {
 
-        }
     },
     watch: {
-        r: function (r, _) {
-            canvas.setAreaRadius(r)
-        },
-        history: function (history, _) {
-            canvas.setHistory(history)
+        side: async function (sideName, _) {
+            this.side =
+            this.races = await(await fetch('/race?sideId='+side.id)).json()
         }
     },
-    created() {
-        this.loadHistory()
+    async created () {
+        this.persons = await(await fetch('/person')).json()
+        this.sides = await(await fetch('/side')).json()
+        this.personClasses = await(await fetch('/person_class')).json()
     },
     data: {
-        x: 0,
-        y: 0,
-        r: 0,
-        history: [],
-    },
-    components: {
-        'multicheckbox': {
-            props: {
-                value: Number,
-                options: Array,
-            },
-            template: `
-                <div>
-                    <label v-for="option in options">
-                        <input
-                            type="checkbox"
-                            @change="$emit('input', option == value ? null : option)"
-                            v-bind:checked="option == value">
-                        {{ option }}
-                    </label>
-                </div>
-            `,
-        }
-    },
+        name: '',
+        personClass: null,
+        side: null,
+        race: null,
+        persons: [],
+        personClasses: [],
+        races: [],
+        sides: []
+    }
 })
-
-let canvas = new CoordinatesCanvas('canvas',
-    45,
-    -2,
-    2,
-    -5,
-    3,
-    app.shoot
-)
