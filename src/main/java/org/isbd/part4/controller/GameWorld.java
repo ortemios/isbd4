@@ -20,11 +20,18 @@ public class GameWorld {
 
     @PostMapping("/main")
     public String main(Model model){
-        String personName="Bob";
-        model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(personName));
-        model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(personName));
-        model.addAttribute("personLocation",gameWorldService.getLocationPerson(personName));
-        model.addAttribute("nearLocation",gameWorldService.getNearLocation(personName));
+        try {
+            String personName="Bob";
+            model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(personName));
+            model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(personName));
+            model.addAttribute("personLocation",gameWorldService.getLocationPerson(personName));
+            model.addAttribute("nearLocation",gameWorldService.getNearLocation(personName));
+            model.addAttribute("nearNpc",gameWorldService.getNPCNearForAttck(personName));
+        }
+        catch (NullPointerException e){
+
+        }
+
         return "GameWorld";
     }
 

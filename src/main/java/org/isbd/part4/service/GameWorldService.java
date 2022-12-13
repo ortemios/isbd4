@@ -4,11 +4,9 @@ import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.isbd.part4.controller.GameWorld;
 import org.isbd.part4.entity.Entity;
 import org.isbd.part4.entity.Location;
+import org.isbd.part4.entity.Npc;
 import org.isbd.part4.entity.Person;
-import org.isbd.part4.repository.EntityRepository;
-import org.isbd.part4.repository.LocationRepository;
-import org.isbd.part4.repository.PersonRepository;
-import org.isbd.part4.repository.RaceRepository;
+import org.isbd.part4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,8 @@ public class GameWorldService {
     private RaceRepository raceRepository;
     @Autowired
     private LocationRepository locationRepository;
+    @Autowired
+    private NpcRepository npcRepository;
 
     public ResultAttac makeAttac(String attacking, String attacked){
 //    System.out.println(attacking+"makeAttac");
@@ -54,6 +54,17 @@ public List<String> getPersonNearForAttack(String personName){
     }
     return personArrayList;
 
+}
+public List<String> getNPCNearForAttck(String personName){
+    Person person=personRepository.findPersonByName(personName);
+    Entity entity=entityRepository.findEntityById(person.getEntityId());
+    Integer locationId =entity.getId();
+    List<Entity> entityList=entityRepository.findEntityByLocation_Id(locationId);
+    ArrayList<String> npcArrayList =new ArrayList<>();
+    for (Entity e:entityList) {
+        npcArrayList.add(String.valueOf(npcRepository.findNpcByEntityId(e.getId()).getId()));
+    }
+    return npcArrayList;
 }
     public List<String> getPersonNearForHelp(String personName){
         Person nowPerson;

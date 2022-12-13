@@ -22,6 +22,7 @@
         <div style="width: 1000%;">
             <div style="float: left; width: 100px; height: 100px;">
                 <form th:action="@{/attack}" method="post">
+                    <label for="task"> Атаковать игрока </label>
                     <input type="hidden" id="attacking" value="Bob" name="attacking"><br>
                     <select  id="task" name="personName">
                         <option th:each="personName : ${nearPersonForAttack}"
@@ -34,6 +35,7 @@
             </div>
             <div style="float: left; width: 100px; height: 100px;">
                 <form th:action="@{/Help}" method="post">
+                    <label for="help"> Вылечить игрока </label>
                     <input type="hidden" id="Helping" value="Bob" name="attacking"><br>
                     <select  id="help" name="personName">
                         <option th:each="personName : ${nearPersonForHelp}"
@@ -46,6 +48,7 @@
             </div>
             <div style="float: left; width: 100px; height: 100px;">
                 <form th:action="@{/changeLocation}" method="post">
+                    <label for="location">Сменить локацию</label>
                     <input type="hidden" id="changeLocation" value="Bob" name="attacking"><br>
                     <select  id="location" name="nearLocation">
                         <option th:each="Location : ${nearLocation}"
@@ -54,6 +57,19 @@
                         </option>
                     </select>
                     <input type="submit" value="Перейти "/>
+                </form>
+            </div>
+            <div style="float: left; width: 100px; height: 100px;">
+                <form th:action="@{/AttacNPC}" method="post">
+                    <label for="location"> Атаковать NPC</label>
+                    <input type="hidden" id="nearNpc" value="Bob" name="attacking"><br>
+                    <select  id="npc" name="npc">
+                        <option th:each="npc : ${nearNpc}"
+                                th:value="${npc}"
+                                th:text="${npc}">
+                        </option>
+                    </select>
+                    <input type="submit" value="Атаковать"/>
                 </form>
             </div>
         </div>
