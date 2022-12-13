@@ -16,6 +16,7 @@ import java.util.Set;
 public interface LocationRepository extends CrudRepository<Location, Long> {
 
     Location findLocationById(Integer id);
+    Location findLocationByName(String name);
 
     @Query(value ="Select near_location_id From location join location_near_location\n" +
             "on location.id = location_near_location.location_id where id= :id",nativeQuery = true)

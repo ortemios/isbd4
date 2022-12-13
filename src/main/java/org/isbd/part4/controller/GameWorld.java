@@ -35,6 +35,13 @@ public class GameWorld {
         return "GameWorld";
     }
 
+    @PostMapping("/changeLocation")
+    public String changeLocation(HttpServletRequest request, Model model){
+        String namePerson=request.getParameter("personName");
+        String location=request.getParameter("nearLocation");
+        gameWorldService.chengeLocation(namePerson,location);
+        return main(model);
+    }
 
 //    @PostMapping("/attack")
 //    public String attack(HttpServletRequest request){

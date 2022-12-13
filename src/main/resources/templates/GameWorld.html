@@ -49,7 +49,7 @@
             <div style="float: left; width: 100px; height: 100px;">
                 <form th:action="@{/changeLocation}" method="post">
                     <label for="location">Сменить локацию</label>
-                    <input type="hidden" id="changeLocation" value="Bob" name="attacking"><br>
+                    <input type="hidden" id="changeLocation" value="Bob" name="personName"><br>
                     <select  id="location" name="nearLocation">
                         <option th:each="Location : ${nearLocation}"
                                 th:value="${Location}"

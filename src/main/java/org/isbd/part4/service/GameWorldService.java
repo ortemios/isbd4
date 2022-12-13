@@ -28,6 +28,8 @@ public class GameWorldService {
     private LocationRepository locationRepository;
     @Autowired
     private NpcRepository npcRepository;
+    @Autowired
+    private BuisnessProcessRepository buisnessProcessRepository;
 
     public ResultAttac makeAttac(String attacking, String attacked){
 //    System.out.println(attacking+"makeAttac");
@@ -36,6 +38,17 @@ public class GameWorldService {
     return ResultAttac.WINATTACKED;
 }
 
+public boolean chengeLocation(String personName,String locationName){
+    Integer personid=personRepository.findPersonByName(personName).getId();
+    Integer locationId=locationRepository.findLocationByName(locationName).getId();
+    try {
+        buisnessProcessRepository.moveLocation(personid,locationId);
+    }catch (Exception e){
+
+    }
+
+    return true;
+}
 
 public List<String> getPersonNearForAttack(String personName){
     Person nowPerson;
