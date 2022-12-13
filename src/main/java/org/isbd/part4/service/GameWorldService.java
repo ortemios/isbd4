@@ -54,7 +54,7 @@ public List<String> getPersonNearForAttack(String personName){
     Person nowPerson;
     Person person=personRepository.findPersonByName(personName);
     Entity entity=entityRepository.findEntityById(person.getEntityId());
-    Integer locationId =entity.getId();
+    Integer locationId =entity.getLocation().getId();
     List<Entity> entityList=entityRepository.findEntityByLocation_Id(locationId);
     ArrayList<String> personArrayList =new ArrayList<>();
     for (Entity e:entityList) {
@@ -71,7 +71,7 @@ public List<String> getPersonNearForAttack(String personName){
 public List<String> getNPCNearForAttck(String personName){
     Person person=personRepository.findPersonByName(personName);
     Entity entity=entityRepository.findEntityById(person.getEntityId());
-    Integer locationId =entity.getId();
+    Integer locationId =entity.getLocation().getId();
     List<Entity> entityList=entityRepository.findEntityByLocation_Id(locationId);
     ArrayList<String> npcArrayList =new ArrayList<>();
     for (Entity e:entityList) {
