@@ -54,7 +54,8 @@ INSERT INTO location_near_location (location_id, near_location_id) VALUES (1, 2)
                                                               (1, 3),
                                                               (2, 1),
                                                               (3, 1),
-                                                              (2, 4);
+                                                              (2, 4),
+                                                              (4, 2);
 
 INSERT INTO person_class_ability (person_class_id, ability_id) VALUES (4, 1),
                                                                       (4, 3),
