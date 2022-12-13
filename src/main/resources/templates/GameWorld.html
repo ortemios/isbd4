@@ -7,6 +7,17 @@
     </head>
     <body>
     <center><h3> Привет {{person.name}}</h3>
+        <table>
+            <tr>
+                <td>
+                    <h4>Ты находишься в локации -</h4>
+                </td>
+                <td>
+                    <h4 th:text="${personLocation}"></h4>
+                </td>
+            </tr>
+        </table>
+
     <div style="overflow: hidden;">
         <div style="width: 1000%;">
             <div style="float: left; width: 100px; height: 100px;">
@@ -33,7 +44,18 @@
                     <input type="submit" value="Лечить"/>
                 </form>
             </div>
-            <div style="float: left; width: 100px; height: 100px;">content++</div>
+            <div style="float: left; width: 100px; height: 100px;">
+                <form th:action="@{/changeLocation}" method="post">
+                    <input type="hidden" id="changeLocation" value="Bob" name="attacking"><br>
+                    <select  id="location" name="nearLocation">
+                        <option th:each="Location : ${nearLocation}"
+                                th:value="${Location}"
+                                th:text="${Location}">
+                        </option>
+                    </select>
+                    <input type="submit" value="Перейти "/>
+                </form>
+            </div>
         </div>
     </div>
     </center>

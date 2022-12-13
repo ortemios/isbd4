@@ -1,9 +1,12 @@
 package org.isbd.part4.service;
 
+import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.isbd.part4.controller.GameWorld;
 import org.isbd.part4.entity.Entity;
+import org.isbd.part4.entity.Location;
 import org.isbd.part4.entity.Person;
 import org.isbd.part4.repository.EntityRepository;
+import org.isbd.part4.repository.LocationRepository;
 import org.isbd.part4.repository.PersonRepository;
 import org.isbd.part4.repository.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GameWorldService {
@@ -22,6 +26,8 @@ public class GameWorldService {
     private PersonRepository personRepository;
     @Autowired
     private RaceRepository raceRepository;
+    @Autowired
+    private LocationRepository locationRepository;
 
     public ResultAttac makeAttac(String attacking, String attacked){
 //    System.out.println(attacking+"makeAttac");
@@ -52,8 +58,7 @@ public List<String> getPersonNearForAttack(String personName){
     public List<String> getPersonNearForHelp(String personName){
         Person nowPerson;
         Person person=personRepository.findPersonByName(personName);
-        Entity entity=entityRepository.findEntityById(person.getEntityId());
-        Integer locationId =entity.getId();
+        Integer locationId =getLocationIdByPersonName(personName);
         List<Entity> entityList=entityRepository.findEntityByLocation_Id(locationId);
         ArrayList<String> personArrayList =new ArrayList<>();
         for (Entity e:entityList) {
@@ -68,5 +73,31 @@ public List<String> getPersonNearForAttack(String personName){
 
     }
 
+    public String getLocationPerson(String personName ){
+        return getLocationByPersonName(personName).getName();
+    }
+
+    public List<String> getNearLocation(String personName){
+        Location personLocation=getLocationByPersonName(personName);
+       List<Integer> location=locationRepository.findAllNearLocationByLocationId(personLocation.getId());
+        List<String> nearLocation=new ArrayList<>();
+        for (Integer i:location) {
+            nearLocation.add(locationRepository.findLocationById(i).getName());
+        }
+        return nearLocation;
+    }
+
+
+    private Integer getLocationIdByPersonName(String personName){
+        Person person=personRepository.findPersonByName(personName);
+        Entity entity=entityRepository.findEntityById(person.getEntityId());
+        Location location=entity.getLocation();
+        return location.getId();
+    }
+    private Location getLocationByPersonName(String personName){
+        Integer locationId =getLocationIdByPersonName(personName);
+        Location location=locationRepository.findLocationById(locationId);
+        return location;
+    }
 
 }

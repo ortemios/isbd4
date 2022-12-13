@@ -23,6 +23,8 @@ public class GameWorld {
         String personName="Bob";
         model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(personName));
         model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(personName));
+        model.addAttribute("personLocation",gameWorldService.getLocationPerson(personName));
+        model.addAttribute("nearLocation",gameWorldService.getNearLocation(personName));
         return "GameWorld";
     }
 
