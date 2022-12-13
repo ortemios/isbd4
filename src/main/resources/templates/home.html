@@ -72,5 +72,14 @@
         </div>
         <script th:src="@{js/canvas.js}"></script>
         <script th:src="@{js/home.js}"></script>
+    <table>
+        <tr>
+            <td>
+                <form th:action="@{/main}" method="post">
+                    <input type="submit" value="Войти за тестового персонажа"/>
+                </form>
+            </td>
+        </tr>
+    </table>
     </body>
 </html>

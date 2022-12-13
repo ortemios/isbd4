@@ -10,4 +10,6 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     List<Person> findAllByAccountId(Integer accountId);
+    Person findPersonByName(String name);
+    Person findPersonByEntityId(Integer accountId);
 }

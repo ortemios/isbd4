@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Lab 4</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    <center><h3> Привет {{person.name}}</h3>
+    <div style="overflow: hidden;">
+        <div style="width: 1000%;">
+            <div style="float: left; width: 100px; height: 100px;">
+                <form th:action="@{/attack}" method="post">
+                    <input type="hidden" id="attacking" value="Bob" name="attacking"><br>
+                    <select  id="task" name="personName">
+                        <option th:each="personName : ${nearPersonForAttack}"
+                                th:value="${personName}"
+                                th:text="${personName}">
+                        </option>
+                    </select>
+                    <input type="submit" value="атаковать"/>
+                </form>
+            </div>
+            <div style="float: left; width: 100px; height: 100px;">
+                <form th:action="@{/Help}" method="post">
+                    <input type="hidden" id="Helping" value="Bob" name="attacking"><br>
+                    <select  id="help" name="personName">
+                        <option th:each="personName : ${nearPersonForHelp}"
+                                th:value="${personName}"
+                                th:text="${personName}">
+                        </option>
+                    </select>
+                    <input type="submit" value="Лечить"/>
+                </form>
+            </div>
+            <div style="float: left; width: 100px; height: 100px;">content++</div>
+        </div>
+    </div>
+    </center>
+    </body>
+    <style>
+
+    </style>
+</html>

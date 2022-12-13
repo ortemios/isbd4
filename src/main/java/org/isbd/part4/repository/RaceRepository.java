@@ -11,4 +11,5 @@ import java.util.List;
 public interface RaceRepository extends JpaRepository<Race, Long> {
 
     List<Race> findAllBySideId(Integer sideId);
+    Race findById(Integer id);
 }
