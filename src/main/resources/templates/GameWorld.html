@@ -20,7 +20,7 @@
 
     <div style="overflow: hidden;">
         <div style="width: 1000%;">
-            <div style="float: left; width: 100px; height: 100px;">
+            <div style="float: left; width: 200px; height: 200px;">
                 <form th:action="@{/attack}" method="post">
                     <label for="task"> Атаковать игрока </label>
                     <input type="hidden" id="attacking" value="Bob" name="attacking"><br>
@@ -30,10 +30,17 @@
                                 th:text="${personName}">
                         </option>
                     </select>
+                    <label for="thingsAtack"> Используя Предмет </label>
+                    <select  id="thingsAtack" name="thingsForAttck">
+                        <option th:each="thingsAtack : ${thingsForAttck}"
+                                th:value="${thingsAtack}"
+                                th:text="${thingsAtack}">
+                        </option>
+                    </select>
                     <input type="submit" value="атаковать"/>
                 </form>
             </div>
-            <div style="float: left; width: 100px; height: 100px;">
+            <div style="float: left; width: 200px; height: 200px;">
                 <form th:action="@{/Help}" method="post">
                     <label for="help"> Вылечить игрока </label>
                     <input type="hidden" id="Helping" value="Bob" name="attacking"><br>
