@@ -23,20 +23,23 @@
             <div style="float: left; width: 200px; height: 200px;">
                 <form th:action="@{/attack}" method="post">
                     <label for="task"> Атаковать игрока </label>
-                    <input type="hidden" id="attacking" value="Bob" name="attacking"><br>
-                    <select  id="task" name="personName">
+                    <input type="hidden" id="attacking" value="Bob" name="PersonOne"><br>
+                    <select  id="task" name="personTwo">
                         <option th:each="personName : ${nearPersonForAttack}"
                                 th:value="${personName}"
                                 th:text="${personName}">
                         </option>
                     </select>
+                    <br>
                     <label for="thingsAtack"> Используя Предмет </label>
+                    <br>
                     <select  id="thingsAtack" name="thingsForAttck">
                         <option th:each="thingsAtack : ${thingsForAttck}"
-                                th:value="${thingsAtack}"
-                                th:text="${thingsAtack}">
+                                th:value="${thingsAtack?.id}"
+                                th:text="${thingsAtack?.name}">
                         </option>
                     </select>
+                    <br>
                     <input type="submit" value="атаковать"/>
                 </form>
             </div>
@@ -50,6 +53,16 @@
                                 th:text="${personName}">
                         </option>
                     </select>
+                    <br>
+                    <label for="thingsHelp"> Используя Предмет </label>
+                    <br>
+                    <select  id="thingsHelp" name="thingsForHelp">
+                        <option th:each="thingsHelp : ${thingsForHelp}"
+                                th:value="${thingsHelp?.name}"
+                                th:text="${thingsHelp?.name}">
+                        </option>
+                    </select>
+                    <br>
                     <input type="submit" value="Лечить"/>
                 </form>
             </div>

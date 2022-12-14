@@ -2,14 +2,12 @@ package org.isbd.part4.service;
 
 import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.isbd.part4.controller.GameWorld;
-import org.isbd.part4.entity.Entity;
-import org.isbd.part4.entity.Location;
-import org.isbd.part4.entity.Npc;
-import org.isbd.part4.entity.Person;
+import org.isbd.part4.entity.*;
 import org.isbd.part4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +28,8 @@ public class GameWorldService {
     private NpcRepository npcRepository;
     @Autowired
     private BuisnessProcessRepository buisnessProcessRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     public ResultAttac makeAttac(String attacking, String attacked){
 //    System.out.println(attacking+"makeAttac");
@@ -44,12 +44,24 @@ public boolean chengeLocation(String personName,String locationName){
     try {
         buisnessProcessRepository.moveLocation(personid,locationId);
     }catch (Exception e){
-
     }
-
     return true;
 }
 
+public boolean atackPerson(String personNameOne,String personNameTwo, Integer idThings){
+    Integer personidOne=personRepository.findPersonByName(personNameOne).getId();
+    Integer personidTwo=personRepository.findPersonByName(personNameTwo).getId();
+    try {
+        if(idThings==-1){
+            buisnessProcessRepository.makeAttack(personidOne,personidTwo,idThings);
+        }else{
+            buisnessProcessRepository.makeAttack(personidOne,personidTwo);
+        }
+
+    }catch (Exception e){
+    }
+    return true;
+}
 public List<String> getPersonNearForAttack(String personName){
     Person nowPerson;
     Person person=personRepository.findPersonByName(personName);
@@ -124,4 +136,16 @@ public List<String> getNPCNearForAttck(String personName){
         return location;
     }
 
+    public ArrayList<Item> getThingsPerson(String personName){
+        Person person= personRepository.findPersonByName(personName);
+        ArrayList<Integer> listIdItem=personRepository.findItemByPersonId(person.getId());
+        ArrayList<Item> itemList=new ArrayList();
+        for (int i:listIdItem) {
+            itemList.add(itemRepository.findItemById(i));
+
+        }
+        itemList.add(new Item(-1,"asd",12,12,"none"));
+
+        return itemList;
+    }
 }

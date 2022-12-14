@@ -1,6 +1,7 @@
 package org.isbd.part4.controller;
 
 import org.isbd.part4.entity.Entity;
+import org.isbd.part4.entity.Item;
 import org.isbd.part4.service.GameWorldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,14 @@ public class GameWorld {
     public String main(Model model){
         try {
             String personName="Bob";
+            model.addAttribute("thingsForAttck",gameWorldService.getThingsPerson(personName));
+            model.addAttribute("thingsForHelp",gameWorldService.getThingsPerson(personName));
             model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(personName));
             model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(personName));
             model.addAttribute("personLocation",gameWorldService.getLocationPerson(personName));
             model.addAttribute("nearLocation",gameWorldService.getNearLocation(personName));
             model.addAttribute("nearNpc",gameWorldService.getNPCNearForAttck(personName));
+
         }
         catch (NullPointerException e){
 
@@ -40,6 +44,12 @@ public class GameWorld {
         String namePerson=request.getParameter("personName");
         String location=request.getParameter("nearLocation");
         gameWorldService.chengeLocation(namePerson,location);
+        return main(model);
+    }
+
+    @PostMapping("/attack")
+    public String atackPerson(HttpServletRequest request, Model model){
+        gameWorldService.atackPerson(request.getParameter("PersonOne"),request.getParameter("personTwo"),Integer.valueOf(request.getParameter("thingsForAttck")));
         return main(model);
     }
 
