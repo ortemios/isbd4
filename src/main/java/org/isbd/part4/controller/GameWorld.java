@@ -1,5 +1,6 @@
 package org.isbd.part4.controller;
 
+import org.apache.catalina.filters.ExpiresFilter;
 import org.isbd.part4.entity.Entity;
 import org.isbd.part4.entity.Item;
 import org.isbd.part4.service.GameWorldService;
@@ -23,13 +24,14 @@ public class GameWorld {
     public String main(Model model){
         try {
             String personName="Bob";
+            model.addAttribute("nearNpc",gameWorldService.getNPCNearForAttck(personName));
             model.addAttribute("thingsForAttck",gameWorldService.getThingsPerson(personName));
             model.addAttribute("thingsForHelp",gameWorldService.getThingsPerson(personName));
             model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(personName));
             model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(personName));
             model.addAttribute("personLocation",gameWorldService.getLocationPerson(personName));
             model.addAttribute("nearLocation",gameWorldService.getNearLocation(personName));
-            model.addAttribute("nearNpc",gameWorldService.getNPCNearForAttck(personName));
+
 
         }
         catch (NullPointerException e){
@@ -37,6 +39,25 @@ public class GameWorld {
         }
 
         return "GameWorld";
+    }
+
+    @PostMapping("/characterInteraction")
+    public String characterInteraction(HttpServletRequest request,Model model){
+        String personTwo="";
+        String typeInteraction=request.getParameter("characterInteraction");
+        String personOne=request.getParameter("PersonOne");
+        if(typeInteraction.equals("Атаковать")){
+             personTwo=request.getParameter("personTwoForAttck");
+        }else{
+            if(typeInteraction.equals("Лечить")){
+                 personTwo=request.getParameter("personNameForHelp");
+            }else {
+                 personTwo=request.getParameter("NameNpc");
+            }
+
+        }
+        System.out.println(personTwo);
+        return main(model);
     }
 
     @PostMapping("/changeLocation")
