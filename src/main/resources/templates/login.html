@@ -6,38 +6,16 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <table class="header">
-            <tr>
-                <td>Имя:</td>
-                <td>Артём</td>
-            </tr>
-            <tr>
-                <td>Фамилия:</td>
-                <td>Лавров</td>
-            </tr>
-            <tr>
-                <td>Отчество:</td>
-                <td>Александрович</td>
-            </tr>
-            <tr>
-                <td>Группа:</td>
-                <td>P3213</td>
-            </tr>
-            <tr>
-                <td>Вариант:</td>
-                <td>13213</td>
-            </tr>
-        </table>
         <p th:if="${param.error}">Неверное имя пользователя или пароль</p>
         <p th:if="${param.register_error}" th:text="${param.register_error}"></p>
         <form th:action="@{/login}" method="post">
             <table>
                 <tr>
                     <td>
-                        <label for="username_input">Имя пользователя: </label>
+                        <label for="username_input">Email: </label>
                     </td>
                     <td>
-                        <input id="username_input" type="text" name="username">
+                        <input id="username_input" type="email" name="username">
                     </td>
                 </tr>
                 <tr>

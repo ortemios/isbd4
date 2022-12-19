@@ -6,14 +6,13 @@ import org.isbd.part4.repository.PersonRepository;
 import org.isbd.part4.repository.RaceRepository;
 import org.isbd.part4.repository.SideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class CrudController {
@@ -30,6 +29,22 @@ public class CrudController {
     @GetMapping(value="/person", produces = "application/json;charset=UTF-8")
     public List<Person> getPersons() {
         final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return personRepository.findAllByAccountId(account.getId());
+    }
+
+    @RequestMapping(
+            path = "/person",
+            method = POST,
+            consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
+            produces = "application/json;charset=UTF-8"
+    )
+    public List<Person> addPerson(
+            @RequestParam String name,
+            @RequestParam Integer raceId,
+            @RequestParam Integer personClassId
+    ) {
+        final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        personRepository.createPerson(account.getId(), name, raceId, personClassId);
         return personRepository.findAllByAccountId(account.getId());
     }
 

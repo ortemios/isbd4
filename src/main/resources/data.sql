@@ -2,10 +2,10 @@
 INSERT INTO side (name) VALUES ('Альянс'),
                                ('Орда');
 
-INSERT INTO race (damage, health, name, side_id) VALUES (10, 100, 'Человек', 2),
-                                                            (20, 80, 'Дворф', 2),
-                                                            (15, 95, 'Орк', 1),
-                                                            (25, 70, 'Нежить', 1);
+INSERT INTO race (damage, health, name, side_id) VALUES (10, 100, 'Человек', 1),
+                                                            (20, 80, 'Дворф', 1),
+                                                            (15, 95, 'Орк', 2),
+                                                            (25, 70, 'Нежить', 2);
 
 INSERT INTO account (email, password) VALUES ('anton@gmail.com', '123321'),
                                                  ('artem@gmail.com', '321123');
