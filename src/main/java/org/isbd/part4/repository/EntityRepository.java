@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface EntityRepository extends JpaRepository<Entity, Integer> {
 
-    List<Entity> findEntityByLocation_Id(Integer Location_Id);
+    List<Entity> findEntityByLocation_Id(Integer locationId);
     Entity findEntityById(Integer id);
+
 }

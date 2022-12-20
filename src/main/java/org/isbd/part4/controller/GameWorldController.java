@@ -1,5 +1,6 @@
 package org.isbd.part4.controller;
 
+import org.isbd.part4.entity.Person;
 import org.isbd.part4.service.GameWorldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,10 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Null;
-import java.lang.reflect.Array;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class GameWorldController {
@@ -20,16 +17,17 @@ public class GameWorldController {
 
 
     @GetMapping("/main")
-    public String main(Model model){
+    public String main(Model model,HttpServletRequest request){
         try {
-            String personName="Bob";
-            model.addAttribute("thingsForAttck",gameWorldService.getThingsPerson(personName));
-            model.addAttribute("thingsForHelp",gameWorldService.getThingsPerson(personName));
-            model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(personName));
-            model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(personName));
-            model.addAttribute("personLocation",gameWorldService.getLocationPerson(personName));
-            model.addAttribute("nearLocation",gameWorldService.getNearLocation(personName));
-            model.addAttribute("nearNpc",gameWorldService.getNPCNearForAttck(personName));
+            final Person person= (Person) request.getSession().getAttribute("person");
+
+            model.addAttribute("thingsForAttck",gameWorldService.getThingsPerson(person.getId()));
+            model.addAttribute("thingsForHelp",gameWorldService.getThingsPerson(person.getId()));
+            model.addAttribute("nearPersonForAttack",gameWorldService.getPersonNearForAttack(person.getId()));
+            model.addAttribute("nearPersonForHelp",gameWorldService.getPersonNearForHelp(person.getId()));
+            model.addAttribute("personLocation",gameWorldService.getLocationPerson(person.getId()));
+            model.addAttribute("nearLocation",gameWorldService.getNearLocation(person.getId()));
+            model.addAttribute("nearNpc",gameWorldService.getNPCNearForAttck(person.getId()));
 
         }
         catch (NullPointerException e){
@@ -41,16 +39,16 @@ public class GameWorldController {
 
     @PostMapping("/changeLocation")
     public String changeLocation(HttpServletRequest request){
-        String namePerson=request.getParameter("personName");
+        int idPerson=Integer.valueOf(request.getParameter("personId"));
         String location=request.getParameter("nearLocation");
-        gameWorldService.chengeLocation(namePerson,location);
+        gameWorldService.changeLocation(idPerson,location);
         return "redirect:/main";
     }
     @PostMapping("/characterInteraction")
     public String characterInteraction(HttpServletRequest request){
         String personTwo="";
         String typeInteraction=request.getParameter("characterInteraction");
-        String personOne=request.getParameter("PersonOne");
+        String personOne=request.getParameter("PersonOneId");
         if(typeInteraction.equals("Атаковать")){
             personTwo=request.getParameter("personTwoForAttck");
         }else{

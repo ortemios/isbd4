@@ -27,34 +27,24 @@ public class GameWorldService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public ResultAttac makeAttac(String attacking, String attacked){
-//    System.out.println(attacking+"makeAttac");
-//    int attackingId= PersonRepository.findByName(attacking);
-//    System.out.println(attackingId);
-    return ResultAttac.WINATTACKED;
-}
 
-public boolean chengeLocation(String personName,String locationName){
-    Integer personid=personRepository.findPersonByName(personName).getId();
+public boolean changeLocation(Integer personId, String locationName){
     Integer locationId=locationRepository.findLocationByName(locationName).getId();
     try {
-        buisnessProcessRepository.moveLocation(personid,locationId);
+        personRepository.movePerson(personId,locationId);
     }catch (Exception e){
     }
     return true;
 }
 
-public boolean makeInteract(String onePerson, String twoPerson, String[] things){
-    int idPersonOne=personRepository.findPersonByName(onePerson).getId();
-    int idPersonTwo=personRepository.findPersonByName(twoPerson).getId();
+public boolean makeInteract(int oneEntityId, int twoEntityId, String[] things){
     String useThings=convertArrayThingsToString(things);
     System.out.println(useThings);
     try {
-        buisnessProcessRepository.makeAttack(idPersonOne,idPersonTwo,useThings);
+        personRepository.interact(oneEntityId,twoEntityId,useThings);
     }catch (Exception e){
 
     }
-
     return true;
 }
 
@@ -161,7 +151,9 @@ public List<String> getNPCNearForAttck(String personName){
         return location;
     }
 
-    public ArrayList<Item> getThingsPerson(String personName){
+
+    //TODO
+    public ArrayList<Item> getThingsPerson(Person person){
         Person person= personRepository.findPersonByName(personName);
         ArrayList<Integer> listIdItem=personRepository.findItemByPersonId(person.getId());
         ArrayList<Item> itemList=new ArrayList();
