@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Lab 4</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h4 th:text="${message}"></h4>
+        <table>
+            <thead>
+                <tr>
+                    <td>Имя персонажа</td>
+                    <td>Класс</td>
+                    <td>Раса</td>
+                    <td>Здоровье</td>
+                    <td>Текущая локация</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>[[${person.name}]]</td>
+                    <td>[[${person.className}]]</td>
+                    <td>[[${person.raceName}]]</td>
+                    <td>[[${person.health}]]</td>
+                    <td>[[${person.locationName}]]</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <form th:action="@{/interact}" method="post">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <thead>
+                                                <tr>
+                                                    <td>Использовать?</td>
+                                                    <td>Название</td>
+                                                    <td>Урон</td>
+                                                    <td>Здоровье</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="item : ${items}">
+                                                    <td><input type="checkbox" name="personItemIds" th:value="${item.id}"></td>
+                                                    <td>[[${item.name}]]</h4></td>
+                                                    <td>[[${item.damage}]]</h4></td>
+                                                    <td>[[${item.health}]]</h4></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <thead>
+                                                <tr>
+                                                    <td>Имя</td>
+                                                    <td>Здоровье</td>
+                                                    <td>Дружественное существо?</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="entity : ${entities}">
+                                                    <td>
+                                                        <button type="submit" name="victimId" th:value="${entity.id}">[[${entity.personName} ?: ${entity.npcName}]]</button>
+                                                    </td>
+                                                    <td>[[${entity.health}]]</h4></td>
+                                                    <td>[[${entity.are_friends} ? 'Да' : 'Нет']]</h4></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </td>
+                    <td>
+                        <table>
+                            <thead>
+                            <tr>
+                                <td>Название локации</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="location : ${locations}">
+                                    <td>
+                                        <form th:action="@{/move_person}" method="post">
+                                            <button type="submit" name="locationId" th:value="${location.id}">[[${location.name}]]</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/home}">К списку персонажей</a>
+    </body>
+</html>

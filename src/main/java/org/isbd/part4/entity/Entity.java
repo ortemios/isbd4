@@ -16,4 +16,5 @@ public class Entity {
     private Location location;
 
     private int health;
+    private boolean areFriends;
 }

@@ -6,9 +6,11 @@ import org.isbd.part4.repository.PersonRepository;
 import org.isbd.part4.repository.RaceRepository;
 import org.isbd.part4.repository.SideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -38,14 +40,19 @@ public class CrudController {
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
             produces = "application/json;charset=UTF-8"
     )
-    public List<Person> addPerson(
+    public ResponseEntity<List<Person>> addPerson(
             @RequestParam String name,
             @RequestParam Integer raceId,
             @RequestParam Integer personClassId
     ) {
         final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        personRepository.createPerson(account.getId(), name, raceId, personClassId);
-        return personRepository.findAllByAccountId(account.getId());
+        try {
+            personRepository.createPerson(account.getId(), name, raceId, personClassId);
+            final List<Person> personList = personRepository.findAllByAccountId(account.getId());
+            return new ResponseEntity<>(personList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(value="/side", produces = "application/json;charset=UTF-8")

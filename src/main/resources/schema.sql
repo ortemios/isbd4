@@ -14,6 +14,7 @@ drop table if exists ability cascade;
 drop table if exists race cascade;
 drop table if exists side cascade;
 drop table if exists account cascade;
+drop procedure if exists interact;
 
 -- Создание таблицй
 create table ability
@@ -428,7 +429,7 @@ end;
 -- Дружественные существа лечат друг друга
 -- При получении отрицательных значений - см. триггер check_entity_health
 -- Удаляются использованные предметы
-create or replace procedure interact(attacker_id int, victim_id int, person_item_ids int[])  as '
+create or replace function interact(attacker_id int, victim_id int, person_item_ids int[]) returns int as '
 declare
 h1 int;
     h2 int;
@@ -437,10 +438,11 @@ h1 int;
     real_h1 int;
     real_h2 int;
     person_id int;
+    result int; -- -1 - победил victim, 0 - ничья, 1 - победил attacker
 begin
     if (select location_id from entity where id = attacker_id) = (select location_id from entity where id = victim_id) then
         h1 := (select entity_health(attacker_id, victim_id, person_item_ids));
-h2 := (select entity_health(victim_id, attacker_id, person_item_ids));
+        h2 := (select entity_health(victim_id, attacker_id, person_item_ids));
         d1 := (select entity_damage(attacker_id, victim_id, person_item_ids));
         d2 := (select entity_damage(victim_id, attacker_id, person_item_ids));
 
@@ -451,30 +453,36 @@ h2 := (select entity_health(victim_id, attacker_id, person_item_ids));
         real_h2 := (select health from entity where id = victim_id);
         if h1 < real_h1 then
             real_h1 = h1;
-end if;
+        end if;
         if h2 < real_h2 then
             real_h2 = h2;
-end if;
+        end if;
+        result := 0;
         if real_h1 > 0 and real_h2 <= 0 then
-select id into person_id from person where person.entity_id = attacker_id;
-if found then
-update person set experience = experience + 1 where person.entity_id = attacker_id;
-insert into person_item (item_id, person_id) values (
-                                                        (select id from item order by random() limit 1),
-    person_id
-    );
-end if;
-end if;
-update entity set health = real_h1 where entity.id = attacker_id;
-update entity set health = real_h2 where entity.id = victim_id;
+            select id into person_id from person where person.entity_id = attacker_id;
+            if found then
+                update person set experience = experience + 1 where person.entity_id = attacker_id;
+                insert into person_item (item_id, person_id) values (
+                    (select id from item order by random() limit 1),
+                    person_id
+                );
+            end if;
+            result := 1;
+        end if;
+        if real_h2 > 0 and real_h1 <= 0 then
+            result := -1;
+        end if;
+        update entity set health = real_h1 where entity.id = attacker_id;
+        update entity set health = real_h2 where entity.id = victim_id;
 
-delete from person_item where person_item.id = any(
-    select person_item.id from person_item
-                                   join person on person.id = person_item.person_id and person.entity_id = attacker_id
-                                   join item on person_item.item_id = item.id and item.type = ''usable''
-    where person_item.id = any(person_item_ids)
-);
-end if;
+        delete from person_item where person_item.id = any(
+            select person_item.id from person_item
+                                           join person on person.id = person_item.person_id and person.entity_id = attacker_id
+                                           join item on person_item.item_id = item.id and item.type = ''usable''
+            where person_item.id = any(person_item_ids)
+        );
+    end if;
+    return result;
 end;
 ' language  plpgsql;
 

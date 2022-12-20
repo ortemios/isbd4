@@ -7,6 +7,7 @@
     </head>
     <body>
         <div id="app">
+            <h4 th:text="${message} ?: ''"></h4>
             <table>
                 <tr>
                     <td>Имя</td>
@@ -57,7 +58,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="person in persons">
-                        <td><a href="/main?personId={{person.id}}">{{person.name}}</a></td>
+                        <td>
+                            <form th:action="@{/play}" method="post">
+                                <button name="personId" :value="`${person.id}`">{{person.name}}</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>

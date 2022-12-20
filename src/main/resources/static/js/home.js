@@ -10,12 +10,16 @@ let app = new Vue({
                 formData.append('name', name)
                 formData.append('raceId', race.id)
                 formData.append('personClassId', personClass.id)
-                this.persons = await (
-                    await fetch('/person', {
-                        method: 'post',
-                        body: formData
-                    })
-                ).json()
+                await fetch('/person', {
+                    method: 'post',
+                    body: formData
+                }).then(async (response) => {
+                    if (response.ok) {
+                        this.persons = await response.json()
+                    } else {
+                        alert('Ошибка при создании персонажа: возможно, данное имя уже занято')
+                    }
+                })
             } else {
                 alert("Заполните форму!")
             }

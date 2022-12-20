@@ -16,5 +16,4 @@ public class Item {
     private int health;
     private int damage;
     private String name;
-
 }

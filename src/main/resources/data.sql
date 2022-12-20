@@ -7,8 +7,8 @@ INSERT INTO race (damage, health, name, side_id) VALUES (10, 100, 'Челове�
                                                             (15, 95, 'Орк', 2),
                                                             (25, 70, 'Нежить', 2);
 
-INSERT INTO account (email, password) VALUES ('anton@gmail.com', '123321'),
-                                                 ('artem@gmail.com', '321123');
+INSERT INTO account (email, password) VALUES ('anton@gmail.com', '{bcrypt}$2a$10$lgEuk3sFhKfXnyEs4KaKKelPDoO8g5jbEY2fb90nMXXWFlE.MFbzi'),
+                                                 ('artyem@gmail.com', '{bcrypt}$2a$10$lgEuk3sFhKfXnyEs4KaKKelPDoO8g5jbEY2fb90nMXXWFlE.MFbzi');
 
 INSERT INTO ability (damage, health, name) VALUES (20, 0, 'Огненый шар'),
                                                       (10, 0, 'Удар ногой'),
@@ -28,7 +28,7 @@ INSERT INTO person_class (damage, health, name) VALUES (22, 14, 'Маг'),
 INSERT INTO item (damage, health, type, name) VALUES (213, 21, 'wearable', 'Молоток'),
                                                          (123, 23, 'wearable', 'кинжал'),
                                                          (3, 23, 'wearable', 'пистолет'),
-                                                         (1, 43, 'wearable', 'Kук'),
+                                                         (1, 43, 'usable', 'Kук'),
                                                          (32, 12, 'usable', 'Исцеляющее зелье '),
                                                          (34, 32, 'wearable', 'Штаны классические'),
                                                          (121, 43, 'wearable', 'Штаны модные'),
