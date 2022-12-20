@@ -6,6 +6,16 @@
         <meta charset="UTF-8">
     </head>
     <body>
+        <table class="header">
+            <tr>
+                <td>Курсовая работа по ИСБД</td>
+                <td>Этап 4</td>
+            </tr>
+            <tr>
+                <td>Шабалов Антон </td>
+                <td>Лавров Артём</td>
+            </tr>
+        </table>
         <p th:if="${param.error}">Неверное имя пользователя или пароль</p>
         <p th:if="${param.register_error}" th:text="${param.register_error}"></p>
         <form th:action="@{/login}" method="post">

@@ -1,19 +1,19 @@
 -- Удаление таблиц
-drop table if exists person_item;
-drop table if exists item;
-drop type if exists item_type;
-drop table if exists person;
-drop table if exists npc;
-drop table if exists entity;
-drop table if exists npc_info;
-drop table if exists location_near_location;
-drop table if exists location;
-drop table if exists person_class_ability;
-drop table if exists person_class;
-drop table if exists ability;
-drop table if exists race;
-drop table if exists side;
-drop table if exists account;
+drop table if exists person_item cascade ;
+drop table if exists item cascade;
+drop type if exists item_type cascade;
+drop table if exists person cascade;
+drop table if exists npc cascade;
+drop table if exists entity cascade;
+drop table if exists npc_info cascade;
+drop table if exists location_near_location cascade;
+drop table if exists location cascade;
+drop table if exists person_class_ability cascade;
+drop table if exists person_class cascade;
+drop table if exists ability cascade;
+drop table if exists race cascade;
+drop table if exists side cascade;
+drop table if exists account cascade;
 
 -- Создание таблицй
 create table ability
