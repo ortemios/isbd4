@@ -1,16 +1,12 @@
 package org.isbd.part4.service;
 
-import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
-import org.isbd.part4.controller.GameWorld;
 import org.isbd.part4.entity.*;
 import org.isbd.part4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class GameWorldService {
@@ -54,7 +50,7 @@ public boolean makeInteract(String onePerson, String twoPerson, String[] things)
     String useThings=convertArrayThingsToString(things);
     System.out.println(useThings);
     try {
-        buisnessProcessRepository.makeAttack(idPersonOne,idPersonTwo);
+        buisnessProcessRepository.makeAttack(idPersonOne,idPersonTwo,useThings);
     }catch (Exception e){
 
     }

@@ -20,15 +20,22 @@ public interface BuisnessProcessRepository extends CrudRepository<Person, Long> 
             nativeQuery = true)
     void moveLocation(@Param("idPerson") int idPerson,@Param("idLocation") int idLocation);
 
-//    @ExceptionHandler
-//    @Query(value ="call interact(:idPersonOne, :idPersonTwo, '{:idPersonTwo}')",
-//            nativeQuery = true)
-//    void makeAttack(@Param("idPersonOne") int idPersonOne,@Param("idPersonTwo") int idPersonTwo);
-
     @ExceptionHandler
-    @Query(value ="call interact(?,?,[1,2])",
+    @Query(value ="call interact(:idPersonOne, :idPersonTwo, :things)",
             nativeQuery = true)
-    void makeAttack(int idPersonOne,int idPersonTwo);
+    void makeAttack(@Param("idPersonOne") int idPersonOne,@Param("idPersonTwo") int idPersonTwo,@Param("things") String things);
+
+
+
+
+
+
+
+
+//    @ExceptionHandler
+//    @Query(value ="call interact(?,?,[1,2])",
+//            nativeQuery = true)
+//    void makeAttack(int idPersonOne,int idPersonTwo);
 
 //    @ExceptionHandler
 //    @Query(value ="call interact(:idPersonOne, :idPersonTwo, '{}')",
