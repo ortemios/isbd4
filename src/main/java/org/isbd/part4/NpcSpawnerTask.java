@@ -11,7 +11,7 @@ public class NpcSpawnerTask {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Scheduled(fixedRate = 5000, initialDelay = 0)
+    @Scheduled(fixedRate = 60 * 1000, initialDelay = 0)
     public void reportCurrentTime() {
         jdbcTemplate.execute("call spawn_npc();");
     }

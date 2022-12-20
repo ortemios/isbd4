@@ -440,6 +440,7 @@ h1 int;
     person_id int;
     result int; -- -1 - победил victim, 0 - ничья, 1 - победил attacker
 begin
+    result := 0;
     if (select location_id from entity where id = attacker_id) = (select location_id from entity where id = victim_id) then
         h1 := (select entity_health(attacker_id, victim_id, person_item_ids));
         h2 := (select entity_health(victim_id, attacker_id, person_item_ids));
@@ -457,7 +458,6 @@ begin
         if h2 < real_h2 then
             real_h2 = h2;
         end if;
-        result := 0;
         if real_h1 > 0 and real_h2 <= 0 then
             select id into person_id from person where person.entity_id = attacker_id;
             if found then
