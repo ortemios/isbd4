@@ -1,5 +1,6 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,42 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-@Entity
-@Table(name="users")
-public class User implements UserDetails {
+@Data
+@javax.persistence.Entity
+public class Account implements UserDetails {
 
+    @GeneratedValue
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(nullable = false, unique = true)
-    @NotNull(message = "Имя пользователя не может быть пустым")
-    private String username;
+    @NotNull(message = "Email пользователя не может быть пустым")
+    private String email;
 
     @Size(min = 8, message = "Пароль слишком короткий")
     @NotNull(message = "Пароль не может быть пустым")
     private String password;
-
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
-    private List<HistoryItem> history = new ArrayList<>();
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -50,17 +33,12 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return password;
+    public String getUsername() {
+        return email;
     }
 
     public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
+        this.email = username;
     }
 
     @Override
@@ -81,13 +59,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public List<HistoryItem> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<HistoryItem> history) {
-        this.history = history;
     }
 }

@@ -1,7 +1,7 @@
-package org.artyemlavrov.lab4.service;
+package org.isbd.part4.service;
 
-import org.artyemlavrov.lab4.entity.User;
-import org.artyemlavrov.lab4.repository.UserRepository;
+import org.isbd.part4.entity.Account;
+import org.isbd.part4.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,25 +14,25 @@ import org.springframework.stereotype.Service;
 public class DatabaseUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Account account = accountRepository.findByEmail(username);
+        if (account == null) {
             throw new UsernameNotFoundException(username);
         }
-        return user;
+        return account;
     }
 
-    public void registerUser(User user) throws UserExistsException {
-        if (userRepository.existsByUsername(user.getUsername())) {
+    public void registerUser(Account account) throws UserExistsException {
+        if (accountRepository.existsByEmail(account.getUsername())) {
             throw new UserExistsException();
         }
-        User target = new User();
-        target.setUsername(user.getUsername());
+        Account target = new Account();
+        target.setEmail(account.getEmail());
         final PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        target.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(target);
+        target.setPassword(encoder.encode(account.getPassword()));
+        accountRepository.save(target);
     }
 }

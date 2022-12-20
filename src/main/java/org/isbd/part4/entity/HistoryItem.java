@@ -1,12 +1,11 @@
-package org.artyemlavrov.lab4.entity;
+package org.isbd.part4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
-@Entity
+@javax.persistence.Entity
 @Table(name="history_items")
 public class HistoryItem {
     @Id
@@ -30,7 +29,7 @@ public class HistoryItem {
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private Account user;
 
     public HistoryItem() {
 
@@ -76,11 +75,11 @@ public class HistoryItem {
         return isHit;
     }
 
-    public User getUser() {
+    public Account getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Account user) {
         this.user = user;
     }
 }

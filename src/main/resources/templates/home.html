@@ -7,33 +7,45 @@
     </head>
     <body>
         <div id="app">
-            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+            <h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
             <table>
                 <tr>
-                    <td>Изменение X: </td>
+                    <td>Имя</td>
                     <td>
-                        <multicheckbox v-model="x" v-bind:options="[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]"></multicheckbox>
+                        <input v-model="name" type="text">
                     </td>
                 </tr>
                 <tr>
-                    <td>Изменение Y: </td>
+                    <td>Сторона</td>
                     <td>
-                        <input v-model="y" type="number">
+                        <select v-model="side">
+                            <option v-for="side in sides" v-bind:value="side.id" >{{side.name}}</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <td>Изменение R: </td>
+                    <td>Раса</td>
                     <td>
-                        <multicheckbox v-model="r" v-bind:options="[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]" @change="submit"></multicheckbox>
+                        <select v-model="race">
+                            <option v-for="race in races">{{race.name}}</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Отправить" v-on:click="submit"></td>
+                    <td>Класс</td>
+                    <td>
+                        <select v-model="personClass">
+                            <option v-for="personClass in personClasses">{{personClass.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Создать персонажа"></td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <form th:action="@{/logout}" method="post">
-                            <input type="submit" value="Перейти к начальной странице"/>
+                            <input type="submit" value="Выйти"/>
                         </form>
                     </td>
                 </tr>
@@ -42,20 +54,32 @@
             <table id="history_table">
                 <thead>
                     <tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>R</td>
-                        <td>Попадание</td>
+                        <td>Имя</td>
+                        <td>Сторона</td>
+                        <td>Раса</td>
+                        <td>Класс</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="row in history">
-                        <td v-for="value in row">{{value}}</td>
+                    <tr v-for="person in persons">
+                        <td>{{person.name}}</td>
+                        <td>{{person.side}}</td>
+                        <td>{{person.race}}</td>
+                        <td>{{person.person_class}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <script th:src="@{js/canvas.js}"></script>
         <script th:src="@{js/home.js}"></script>
+    <table>
+        <tr>
+            <td>
+                <form th:action="@{/main}" method="get">
+                    <input type="submit" value="Войти за тестового персонажа"/>
+                </form>
+            </td>
+        </tr>
+    </table>
     </body>
 </html>
