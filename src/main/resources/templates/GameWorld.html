@@ -22,11 +22,13 @@
             box-shadow: 0 2px 2px rgba(1,1,1,1); /* Параметры тени */
         }
     </style>
-        <th:block th:each="thingsAtack : ${thingsForAttck}">
-            <input type="checkbox" name="cers" th:value="${thingsAtack?.id}"/>
-            <label th:text="${thingsAtack?.name}"></label>
-        </th:block>
+        <h4>Использовать предметы</h4>
+
         <form th:action="@{/characterInteraction}" method="post">
+            <th:block th:each="thingsAtack : ${thingsForAttck}">
+                <input type="checkbox" name="cers" th:value="${thingsAtack?.id}"/>
+                <label  th:text="${thingsAtack?.name}"></label>
+            </th:block>
     <div style="overflow: hidden;">
         <div style="width: 1000%;">
 

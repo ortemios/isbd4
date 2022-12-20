@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -61,6 +62,12 @@ public class GameWorld {
             }
 
         }
+        String aa=request.getParameter("ners");
+
+        System.out.println(aa);
+
+
+
         System.out.println(personTwo);
         return main(model);
     }
