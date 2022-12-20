@@ -46,6 +46,24 @@ public class GameWorld {
         gameWorldService.chengeLocation(namePerson,location);
         return main(model);
     }
+    @PostMapping("/characterInteraction")
+    public String characterInteraction(HttpServletRequest request,Model model){
+        String personTwo="";
+        String typeInteraction=request.getParameter("characterInteraction");
+        String personOne=request.getParameter("PersonOne");
+        if(typeInteraction.equals("Атаковать")){
+            personTwo=request.getParameter("personTwoForAttck");
+        }else{
+            if(typeInteraction.equals("Лечить")){
+                personTwo=request.getParameter("personNameForHelp");
+            }else {
+                personTwo=request.getParameter("NameNpc");
+            }
+
+        }
+        System.out.println(personTwo);
+        return main(model);
+    }
 
     @PostMapping("/attack")
     public String atackPerson(HttpServletRequest request, Model model){

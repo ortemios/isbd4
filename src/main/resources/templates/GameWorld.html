@@ -21,10 +21,10 @@
     <div style="overflow: hidden;">
         <div style="width: 1000%;">
             <div style="float: left; width: 200px; height: 200px;">
-                <form th:action="@{/attack}" method="post">
+                <form th:action="@{/characterInteraction}" method="post">
                     <label for="task"> Атаковать игрока </label>
                     <input type="hidden" id="attacking" value="Bob" name="PersonOne"><br>
-                    <select  id="task" name="personTwo">
+                    <select  id="task" name="personTwoForAttck">
                         <option th:each="personName : ${nearPersonForAttack}"
                                 th:value="${personName}"
                                 th:text="${personName}">
@@ -40,14 +40,13 @@
                         </option>
                     </select>
                     <br>
-                    <input type="submit" value="атаковать"/>
-                </form>
+                    <input type="submit" name="characterInteraction"  value="Атаковать"/>
+
             </div>
             <div style="float: left; width: 200px; height: 200px;">
-                <form th:action="@{/Help}" method="post">
                     <label for="help"> Вылечить игрока </label>
                     <input type="hidden" id="Helping" value="Bob" name="attacking"><br>
-                    <select  id="help" name="personName">
+                    <select  id="help" name="personNameForHelp">
                         <option th:each="personName : ${nearPersonForHelp}"
                                 th:value="${personName}"
                                 th:text="${personName}">
@@ -63,7 +62,18 @@
                         </option>
                     </select>
                     <br>
-                    <input type="submit" value="Лечить"/>
+                    <input type="submit" name="characterInteraction"  value="Лечить"/>
+            </div>
+            <div style="float: left; width: 100px; height: 100px;">
+                    <label for="location"> Атаковать NPC</label>
+                    <input type="hidden" id="nearNpc" value="Bob" name="attacking"><br>
+                    <select  id="npc" name="NameNpc">
+                        <option th:each="npc : ${nearNpc}"
+                                th:value="${npc}"
+                                th:text="${npc}">
+                        </option>
+                    </select>
+                    <input type="submit" name="characterInteraction" value="Атаковать NPC" />
                 </form>
             </div>
             <div style="float: left; width: 100px; height: 100px;">
@@ -77,19 +87,6 @@
                         </option>
                     </select>
                     <input type="submit" value="Перейти "/>
-                </form>
-            </div>
-            <div style="float: left; width: 100px; height: 100px;">
-                <form th:action="@{/AttacNPC}" method="post">
-                    <label for="location"> Атаковать NPC</label>
-                    <input type="hidden" id="nearNpc" value="Bob" name="attacking"><br>
-                    <select  id="npc" name="npc">
-                        <option th:each="npc : ${nearNpc}"
-                                th:value="${npc}"
-                                th:text="${npc}">
-                        </option>
-                    </select>
-                    <input type="submit" value="Атаковать"/>
                 </form>
             </div>
         </div>
