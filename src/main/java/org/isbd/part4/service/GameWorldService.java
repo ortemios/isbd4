@@ -144,7 +144,6 @@ public List<String> getNPCNearForAttck(String personName){
             itemList.add(itemRepository.findItemById(i));
 
         }
-        itemList.add(new Item(-1,"asd",12,12,"none"));
 
         return itemList;
     }

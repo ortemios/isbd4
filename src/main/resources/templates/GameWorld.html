@@ -6,22 +6,32 @@
         <meta charset="UTF-8">
     </head>
     <body>
-    <center><h3> Привет {{person.name}}</h3>
-        <table>
-            <tr>
-                <td>
-                    <h4>Ты находишься в локации -</h4>
-                </td>
-                <td>
-                    <h4 th:text="${personLocation}"></h4>
-                </td>
-            </tr>
-        </table>
+    <center>
+    <style>
+        .boxContent{
 
+            float: left;
+            width: 2.5%;
+
+            box-shadow: 0 2px 2px rgba(0,0,0,1); /* Параметры тени */
+        }
+        .boxContentMainInfo{
+            float: left;
+            width: 2.5%;
+
+            box-shadow: 0 2px 2px rgba(1,1,1,1); /* Параметры тени */
+        }
+    </style>
+        <th:block th:each="thingsAtack : ${thingsForAttck}">
+            <input type="checkbox" name="cers" th:value="${thingsAtack?.id}"/>
+            <label th:text="${thingsAtack?.name}"></label>
+        </th:block>
+        <form th:action="@{/characterInteraction}" method="post">
     <div style="overflow: hidden;">
         <div style="width: 1000%;">
-            <div style="float: left; width: 200px; height: 200px;">
-                <form th:action="@{/characterInteraction}" method="post">
+
+            <div class="boxContent" >
+
                     <label for="task"> Атаковать игрока </label>
                     <input type="hidden" id="attacking" value="Bob" name="PersonOne"><br>
                     <select  id="task" name="personTwoForAttck">
@@ -31,19 +41,11 @@
                         </option>
                     </select>
                     <br>
-                    <label for="thingsAtack"> Используя Предмет </label>
-                    <br>
-                    <select  id="thingsAtack" name="thingsForAttck">
-                        <option th:each="thingsAtack : ${thingsForAttck}"
-                                th:value="${thingsAtack?.id}"
-                                th:text="${thingsAtack?.name}">
-                        </option>
-                    </select>
-                    <br>
+
                     <input type="submit" name="characterInteraction"  value="Атаковать"/>
 
             </div>
-            <div style="float: left; width: 200px; height: 200px;">
+            <div class="boxContent" >
                     <label for="help"> Вылечить игрока </label>
                     <input type="hidden" id="Helping" value="Bob" name="attacking"><br>
                     <select  id="help" name="personNameForHelp">
@@ -53,18 +55,9 @@
                         </option>
                     </select>
                     <br>
-                    <label for="thingsHelp"> Используя Предмет </label>
-                    <br>
-                    <select  id="thingsHelp" name="thingsForHelp">
-                        <option th:each="thingsHelp : ${thingsForHelp}"
-                                th:value="${thingsHelp?.name}"
-                                th:text="${thingsHelp?.name}">
-                        </option>
-                    </select>
-                    <br>
                     <input type="submit" name="characterInteraction"  value="Лечить"/>
             </div>
-            <div style="float: left; width: 100px; height: 100px;">
+            <div class="boxContent" >
                     <label for="location"> Атаковать NPC</label>
                     <input type="hidden" id="nearNpc" value="Bob" name="attacking"><br>
                     <select  id="npc" name="NameNpc">
@@ -73,10 +66,22 @@
                                 th:text="${npc}">
                         </option>
                     </select>
+                <br>
                     <input type="submit" name="characterInteraction" value="Атаковать NPC" />
                 </form>
             </div>
-            <div style="float: left; width: 100px; height: 100px;">
+            <div class="boxContentMainInfo" >
+                <h3> Привет {{person.name}}</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <h4>Ты находишься в локации -</h4>
+                        </td>
+                        <td>
+                            <h4 th:text="${personLocation}"></h4>
+                        </td>
+                    </tr>
+                </table>
                 <form th:action="@{/changeLocation}" method="post">
                     <label for="location">Сменить локацию</label>
                     <input type="hidden" id="changeLocation" value="Bob" name="personName"><br>
