@@ -26,7 +26,7 @@
 
         <form th:action="@{/characterInteraction}" method="post">
             <th:block th:each="thingsAtack : ${thingsForAttck}">
-                <input type="checkbox" name="cers" th:value="${thingsAtack?.id}"/>
+                <input type="checkbox" name="useThings" th:value="${thingsAtack?.id}"/>
                 <label  th:text="${thingsAtack?.name}"></label>
             </th:block>
     <div style="overflow: hidden;">

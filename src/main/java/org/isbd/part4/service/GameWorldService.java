@@ -48,20 +48,49 @@ public boolean chengeLocation(String personName,String locationName){
     return true;
 }
 
-public boolean atackPerson(String personNameOne,String personNameTwo, Integer idThings){
-    Integer personidOne=personRepository.findPersonByName(personNameOne).getId();
-    Integer personidTwo=personRepository.findPersonByName(personNameTwo).getId();
+public boolean makeInteract(String onePerson, String twoPerson, String[] things){
+    int idPersonOne=personRepository.findPersonByName(onePerson).getId();
+    int idPersonTwo=personRepository.findPersonByName(twoPerson).getId();
+    String useThings=convertArrayThingsToString(things);
+    System.out.println(useThings);
     try {
-        if(idThings==-1){
-            buisnessProcessRepository.makeAttack(personidOne,personidTwo,idThings);
-        }else{
-            buisnessProcessRepository.makeAttack(personidOne,personidTwo);
-        }
-
+        buisnessProcessRepository.makeAttack(idPersonOne,idPersonTwo);
     }catch (Exception e){
+
     }
+
     return true;
 }
+
+private String convertArrayThingsToString(String[] strArray){
+    String resultString="'{";
+    if(strArray==null){
+        resultString="{}";
+        return resultString;
+    }
+
+    resultString+=strArray[0];
+    for(int i=1;i<strArray.length;i++){
+        resultString+=","+strArray[i];
+    }
+    resultString+="}'";
+
+    return resultString;
+}
+//public boolean atackPerson(String personNameOne,String personNameTwo, Integer idThings){
+//    Integer personidOne=personRepository.findPersonByName(personNameOne).getId();
+//    Integer personidTwo=personRepository.findPersonByName(personNameTwo).getId();
+//    try {
+//        if(idThings==-1){
+//            buisnessProcessRepository.makeAttack(personidOne,personidTwo,idThings);
+//        }else{
+//            buisnessProcessRepository.makeAttack(personidOne,personidTwo);
+//        }
+//
+//    }catch (Exception e){
+//    }
+//    return true;
+//}
 public List<String> getPersonNearForAttack(String personName){
     Person nowPerson;
     Person person=personRepository.findPersonByName(personName);

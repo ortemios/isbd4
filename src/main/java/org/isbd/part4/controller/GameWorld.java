@@ -1,16 +1,14 @@
 package org.isbd.part4.controller;
 
-import org.isbd.part4.entity.Entity;
-import org.isbd.part4.entity.Item;
 import org.isbd.part4.service.GameWorldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Null;
+import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,21 +60,16 @@ public class GameWorld {
             }
 
         }
-        String aa=request.getParameter("ners");
 
-        System.out.println(aa);
-
-
-
-        System.out.println(personTwo);
+        gameWorldService.makeInteract(personOne,personTwo,request.getParameterValues("useThings"));
         return main(model);
     }
 
-    @PostMapping("/attack")
-    public String atackPerson(HttpServletRequest request, Model model){
-        gameWorldService.atackPerson(request.getParameter("PersonOne"),request.getParameter("personTwo"),Integer.valueOf(request.getParameter("thingsForAttck")));
-        return main(model);
-    }
+//    @PostMapping("/attack")
+//    public String atackPerson(HttpServletRequest request, Model model){
+//        gameWorldService.atackPerson(request.getParameter("PersonOne"),request.getParameter("personTwo"),Integer.valueOf(request.getParameter("thingsForAttck")));
+//        return main(model);
+//    }
 
 //    @PostMapping("/attack")
 //    public String attack(HttpServletRequest request){
