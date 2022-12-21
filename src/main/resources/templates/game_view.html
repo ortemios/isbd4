@@ -6,6 +6,7 @@
         <meta charset="UTF-8">
     </head>
     <body>
+    <center>
         <h4 th:text="${message}"></h4>
         <table>
             <thead>
@@ -102,5 +103,24 @@
             </tbody>
         </table>
         <a th:href="@{/home}">К списку персонажей</a>
+    </center>
+    <style type="text/css">
+        TABLE {
+
+            border-collapse: collapse; /* Убираем двойные линии между ячейками */
+            align-content: center;
+        }
+        TD, TH {
+            padding: 0px; /* Поля вокруг содержимого таблицы */
+            border: 1px solid black; /* Параметры рамки */
+            align-content: center;
+            float: none;
+            text-align: center;
+            padding: 5px; /* Поля вокруг текста */
+        }
+        TH {
+            align-content: center;
+        }
+    </style>
     </body>
 </html>
