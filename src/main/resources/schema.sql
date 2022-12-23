@@ -168,6 +168,8 @@ delete from entity where entity.id = new.id;
 return null;
 else
 select * into r_person from person where person.entity_id = new.id;
+update person set level=1 where person.entity_id=new.id;
+update person set experience=0 where person.entity_id=new.id;
 new.location_id = (select location.id from location order by id limit 1);
             new.health = (select health from race where race.id = r_person.race_id) + (select health from person_class where person_class.id = r_person.person_class_id);
 return new;
@@ -214,6 +216,8 @@ begin
     if new.experience >= 10 then
         new.level = new.level + new.experience / 10;
         new.experience = new.experience % 10;
+        update entity SET health=(select health FROM entity where entity.id=new.entity_id)*new.level where entity.id=new.entity_id;
+
 end if;
 return new;
 end;
@@ -420,6 +424,8 @@ else
                        ), 0);
 end if;
 end if;
+r_damage:= r_damage + 10*coalesce((select level
+                                from person where entity_id=a_entity_id), 0);
 return r_damage;
 end;
 ' language  plpgsql;

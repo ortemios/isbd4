@@ -5,7 +5,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <meta charset="UTF-8">
     </head>
-    <body>
+    <body th:style="'background:url(' + @{/images/background.jpg} + ');'">
     <center>
         <h4 th:text="${message}"></h4>
         <table>
@@ -15,6 +15,8 @@
                     <td>Класс</td>
                     <td>Раса</td>
                     <td>Здоровье</td>
+                    <td>Опыт</td>
+                    <td>Уровень</td>
                     <td>Текущая локация</td>
                 </tr>
             </thead>
@@ -24,6 +26,8 @@
                     <td>[[${person.className}]]</td>
                     <td>[[${person.raceName}]]</td>
                     <td>[[${person.health}]]</td>
+                    <td>[[${person.experience}]]</td>
+                    <td>[[${person.level}]]</td>
                     <td>[[${person.locationName}]]</td>
                 </tr>
             </tbody>
@@ -105,6 +109,12 @@
         <a th:href="@{/home}">К списку персонажей</a>
     </center>
     <style type="text/css">
+        body{
+            background-color: lightsteelblue;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
         TABLE {
 
             border-collapse: collapse; /* Убираем двойные линии между ячейками */
@@ -124,6 +134,7 @@
             align-content: center;
             vertical-align: top;
         }
+
     </style>
     </body>
 </html>

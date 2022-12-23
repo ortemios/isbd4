@@ -47,7 +47,7 @@ public class GameService {
 
     public List<Map<String, Object>> getEntitiesAtLocationFor(Person person) {
         return jdbcTemplate.queryForList(
-                "select entity.id as id, entity.health as health, npc.name as npcName, person.name as personName, are_friends(entity.id, ?) from entity " +
+                "select entity.id as id, entity.health as health,  person.level as level, person.experience as experience, npc.name as npcName, person.name as personName, are_friends(entity.id, ?) from entity " +
                 "left join npc on npc.entity_id = entity.id " +
                 "left join person on person.entity_id = entity.id " +
                 "where entity.location_id = (select location_id from entity where entity.id = ?) " +
@@ -61,7 +61,7 @@ public class GameService {
     public Map<String, Object> getPersonInfoFor(Person person) {
 
         return jdbcTemplate.queryForMap(
-                "select person.name as name, entity.health as health, location.name as locationName, race.name as raceName, person_class.name as className " +
+                "select person.name as name,  person.level as level, person.experience as experience, entity.health as health, location.name as locationName, race.name as raceName, person_class.name as className " +
                 "from person join entity on " +
                 "person.entity_id = entity.id and person.id = ? " +
                 "join race on race.id = person.race_id " +

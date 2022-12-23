@@ -5,7 +5,34 @@
         <title>Курсовая работа по предмету "Информационные системы и базы данных"</title>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     </head>
-    <body>
+    <body th:style="'background:url(' + @{/images/background.jpg} + ');'">
+    <center>
+        <style>
+            body{
+                background-color: lightsteelblue;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
+            }
+
+            TD, TH {
+                padding: 0px; /* Поля вокруг содержимого таблицы */
+                align-content: center;
+                float: none;
+                text-align: center;
+                padding: 5px; /* Поля вокруг текста */
+                vertical-align: top;
+                align-content: center;
+            }
+            TH {
+                align-content: center;
+                vertical-align: top;
+            }
+            #app{
+                padding-top: 16%;
+
+            }
+        </style>
         <div id="app">
             <h4 th:text="${message} ?: ''"></h4>
             <table>
@@ -68,5 +95,6 @@
             </table>
         </div>
         <script th:src="@{js/home.js}"></script>
+    </center>
     </body>
 </html>
