@@ -5,7 +5,8 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <meta charset="UTF-8">
     </head>
-    <body th:style="'background:url(' + @{/images/background.jpg} + ');'">
+    <body th:style="'background:url(' + @{/images/background.jpg} + ') no-repeat fixed; '">
+
 
     <center>
         <table class="header">
@@ -53,11 +54,11 @@
                 padding-top: 16%;
             }
             body{
-                background-color: lightsteelblue;
+                background-color: #4d7a46;
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-attachment: fixed;
-            }
+                }
 
             TD, TH {
                 padding: 0px; /* Поля вокруг содержимого таблицы */
@@ -66,6 +67,12 @@
                 text-align: center;
                 padding: 5px; /* Поля вокруг текста */
                 vertical-align: top;
+                font-size:17px;
+                color: #faf9f7 ;
+                text-shadow: 2px 0 2px #000,
+                0 1px 1px #000,
+                -1px 0 1px #000,
+                0 -1px 1px #000;
             }
             TH {
                 align-content: center;
