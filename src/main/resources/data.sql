@@ -8,7 +8,8 @@ INSERT INTO race (damage, health, name, side_id) VALUES (10, 100, 'Челове�
                                                             (25, 70, 'Нежить', 2);
 
 INSERT INTO account (email, password) VALUES ('anton@gmail.com', '{bcrypt}$2a$10$lgEuk3sFhKfXnyEs4KaKKelPDoO8g5jbEY2fb90nMXXWFlE.MFbzi'),
-                                                 ('artyem@gmail.com', '{bcrypt}$2a$10$lgEuk3sFhKfXnyEs4KaKKelPDoO8g5jbEY2fb90nMXXWFlE.MFbzi');
+                                                 ('artyem@gmail.com', '{bcrypt}$2a$10$lgEuk3sFhKfXnyEs4KaKKelPDoO8g5jbEY2fb90nMXXWFlE.MFbzi'),
+                                                 ('admin@admin.ru', '{bcrypt}$2a$10$7fw5TRtXWlrkni2kuP.Seuh7UgMkuHnZKl60t9frFyelP9QrXVVBK');
 
 INSERT INTO ability (damage, health, name) VALUES (20, 0, 'Огненый шар'),
                                                       (10, 0, 'Удар ногой'),

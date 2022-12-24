@@ -31,12 +31,7 @@ let app = new Vue({
         }
     },
     async created () {
-
-        if (await(await fetch('/TypeAccount')).text()=="admin"){
-            document.location.href = '/admin'
-        }
-
-        this.persons = await(await fetch('/person')).json()
+        this.persons = await(await fetch('/allPerson')).json()
         this.sides = await(await fetch('/side')).json()
         this.personClasses = await(await fetch('/person_class')).json()
     },

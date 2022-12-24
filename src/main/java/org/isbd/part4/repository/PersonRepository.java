@@ -34,4 +34,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Person findPersonById(int id);
     List<Person> findAllByAccountId(Integer accountId);
+    @Query(value ="SELECT * FROM person",
+            nativeQuery = true)
+    List<Person> getAllPerson();
 }

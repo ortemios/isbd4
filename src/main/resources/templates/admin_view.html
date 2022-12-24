@@ -5,7 +5,6 @@
         <title>Курсовая работа по предмету "Информационные системы и базы данных"</title>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     </head>
-
     <body th:style="'background:url(' + @{/images/background.jpg} + ') no-repeat fixed; '">
     <center>
         <style>
@@ -47,39 +46,6 @@
             <h4 th:text="${message} ?: ''"></h4>
             <table>
                 <tr>
-                    <td>Имя</td>
-                    <td>
-                        <input v-model="personName" type="text">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Сторона</td>
-                    <td>
-                        <select v-model="sideName">
-                            <option v-for="side in sides">{{side.name}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Раса</td>
-                    <td>
-                        <select v-model="raceName">
-                            <option v-for="race in races">{{race.name}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Класс</td>
-                    <td>
-                        <select v-model="personClassName">
-                            <option v-for="personClass in personClasses">{{personClass.name}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a class="newPerson" href="#" v-on:click="createPerson">Создать персонажа</a></td>
-                </tr>
-                <tr>
                     <td colspan="2">
                         <form th:action="@{/logout}" method="post">
                             <input type="submit" value="Выйти"/>
@@ -96,7 +62,7 @@
                 <tbody>
                     <tr v-for="person in persons">
                         <td>
-                            <form th:action="@{/play}" method="post">
+                            <form th:action="@{/banAccount}" method="post">
                                 <button name="personId" :value="`${person.id}`">{{person.name}}</button>
                             </form>
                         </td>
@@ -104,7 +70,7 @@
                 </tbody>
             </table>
         </div>
-        <script th:src="@{js/home.js}"></script>
+        <script th:src="@{js/admin.js}"></script>
     </center>
     </body>
 </html>

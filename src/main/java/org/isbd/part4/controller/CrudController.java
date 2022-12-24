@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -30,10 +34,31 @@ public class CrudController {
 
     @GetMapping(value="/person", produces = "application/json;charset=UTF-8")
     public List<Person> getPersons() {
+
         final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return personRepository.findAllByAccountId(account.getId());
     }
 
+    @GetMapping(value="/allPerson", produces = "application/json;charset=UTF-8")
+    public List<Person> getAllPersons() {
+
+        final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(AdminPageController.adminList.contains(account.getEmail())){
+
+            return personRepository.getAllPerson();
+        }
+        return personRepository.findAllByAccountId(account.getId());
+    }
+
+    @GetMapping(value="/TypeAccount", produces = "application/json;charset=UTF-8")
+    public String getTypeAccount() {
+        final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (AdminPageController.adminList.contains(account.getEmail())){
+            return "admin";
+        }else
+            return "";
+    }
     @RequestMapping(
             path = "/person",
             method = POST,

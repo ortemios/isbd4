@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class LoginPageController {
     public String register(Account account, HttpServletRequest request, RedirectAttributes attributes) {
         final String redirectHome = "redirect:/home";
         final String redirectLogin = "redirect:/login";
+        final String redirectAdmin="redirect:/admin";
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Account>> violations = validator.validate(account);
         if (!violations.isEmpty()) {
@@ -38,10 +40,12 @@ public class LoginPageController {
         try {
             databaseUserDetailsService.registerUser(account);
             request.login(account.getUsername(), account.getPassword());
+            System.out.println("asdasdasda");
         } catch (UserExistsException e) {
             attributes.addAttribute("register_error", "Пользователь с данным именем уже существует");
             return redirectLogin;
         } catch (ServletException ignored) {}
+
         return redirectHome;
     }
 }
