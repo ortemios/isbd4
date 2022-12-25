@@ -37,26 +37,27 @@
                 align-content: center;
                 vertical-align: top;
             }
-            #app{
-                padding-top: 16%;
-
+            .exitButton{
+                width: 95%;
+                font-size: 20px;
             }
         </style>
         <div id="app">
             <h4 th:text="${message} ?: ''"></h4>
+            <form th:action="@{/logout}" method="post">
+                <input class="exitButton" type="submit" value="Выйти"/>
+            </form>
             <table>
                 <tr>
                     <td colspan="2">
-                        <form th:action="@{/logout}" method="post">
-                            <input type="submit" value="Выйти"/>
-                        </form>
+
                     </td>
                 </tr>
             </table>
             <table id="history_table">
                 <thead>
                     <tr>
-                        <td>Список персонажей</td>
+                        <td>Список персонажей </br> Выберите чей аккаунт нужно заблокировать</td>
                     </tr>
                 </thead>
                 <tbody>
