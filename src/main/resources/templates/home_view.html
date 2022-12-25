@@ -76,17 +76,22 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
-                    <td><a class="newPerson" href="#" v-on:click="createPerson">Создать персонажа</a></td>
-                </tr>
+
                 <tr>
                     <td colspan="2">
-                        <form th:action="@{/logout}" method="post">
-                            <input type="submit" value="Выйти"/>
-                        </form>
+
                     </td>
                 </tr>
             </table>
+            <tr>
+                <td><a class="newPerson" href="#" v-on:click="createPerson">Создать персонажа</a></td>
+            </tr>
+            <br>
+            <br>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Выйти"/>
+            </form>
+
             <table id="history_table">
                 <thead>
                     <tr>

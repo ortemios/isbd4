@@ -7,6 +7,7 @@ import org.isbd.part4.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,7 +27,7 @@ public class AdminPageController {
     }
 
     @PostMapping("/banAccount")
-    public String play(@RequestParam Integer personId, HttpServletRequest request){
+    public String banAccount(@RequestParam Integer personId){
         final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(adminList.contains(account.getEmail())){
             final Person person = personRepository.findPersonById(personId);
@@ -38,4 +39,14 @@ public class AdminPageController {
             return "redirect:/logout";
         }
     }
+    @GetMapping("/checkAdmin")
+    public String checkAmin(){
+        final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(adminList.contains(account.getEmail())){
+            return "";
+        }else {
+            return "redirect:/logout";
+        }
+    }
+
 }

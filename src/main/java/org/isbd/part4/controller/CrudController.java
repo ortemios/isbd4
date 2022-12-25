@@ -94,4 +94,10 @@ public class CrudController {
     public List<PersonClass> getPersonClasses() {
         return personClassRepository.findAll();
     }
+    @GetMapping(value="/havePerson", produces = "application/json;charset=UTF-8")
+    public String havePerson() {
+        final Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return String.valueOf(personRepository.countDistinctByAccountId(account.getId()));
+
+    }
 }

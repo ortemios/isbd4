@@ -31,6 +31,9 @@ let app = new Vue({
         }
     },
     async created () {
+        if (await(await fetch('/TypeAccount')).text()!="admin"){
+            document.location.href = '/logout'
+        }
         this.persons = await(await fetch('/allPerson')).json()
         this.sides = await(await fetch('/side')).json()
         this.personClasses = await(await fetch('/person_class')).json()

@@ -37,4 +37,5 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query(value ="SELECT * FROM person",
             nativeQuery = true)
     List<Person> getAllPerson();
+    Integer countDistinctByAccountId(Integer accountId);
 }

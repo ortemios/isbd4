@@ -20,4 +20,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value ="DELETE FROM account where id=:accountId",
             nativeQuery = true)
     void banAccount(@Param("accountId") int accountId);
+
 }
